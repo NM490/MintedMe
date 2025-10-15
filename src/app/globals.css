@@ -1,0 +1,149 @@
+@import "@coinbase/onchainkit/styles.css";
+@import "tailwindcss";
+
+@config '../../tailwind.config.js';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer utilities {
+  html,
+  body {
+    width: 100%;
+    min-height: 100svh;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html {
+      color-scheme: dark;
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 267 100% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 267 100% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 267 100% 4%;
+    --primary: 267 72% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 267 60% 96%;
+    --secondary-foreground: 267 72% 35%;
+    --muted: 267 30% 95%;
+    --muted-foreground: 267 20% 40%;
+    --accent: 267 60% 96%;
+    --accent-foreground: 267 72% 35%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 267 30% 90%;
+    --input: 267 30% 90%;
+    --ring: 267 72% 35%;
+    --chart-1: 267 72% 35%;
+    --chart-2: 267 100% 70%;
+    --chart-3: 267 60% 85%;
+    --chart-4: 267 82% 45%;
+    --chart-5: 267 50% 60%;
+    --radius: 0.5rem;
+
+    /* New color palette variables */
+    --clr-primary-900: #5a2797;
+    --clr-primary-600: #6a14d1;
+    --clr-primary-400: #ad69ff;
+    --clr-primary-100: #d8c4f1;
+
+    /* Primary variables */
+    --clr-primary-a0: #5a2797;
+    --clr-primary-a10: #6a14d1;
+    --clr-primary-a20: #7d2ae3;
+    --clr-primary-a30: #8f40f5;
+    --clr-primary-a40: #ad69ff;
+    --clr-primary-a50: #d8c4f1;
+
+    /* Surface variables */
+    --clr-surface-a0: #ffffff;
+    --clr-surface-a10: #faf9fc;
+    --clr-surface-a20: #f5f3f9;
+    --clr-surface-a30: #f0edf6;
+    --clr-surface-a40: #ebe7f3;
+    --clr-surface-a50: #e6e1f0;
+  }
+
+  .dark {
+    --background: 267 100% 4%;
+    --foreground: 267 60% 96%;
+    --card: 267 100% 6%;
+    --card-foreground: 267 60% 96%;
+    --popover: 267 100% 6%;
+    --popover-foreground: 267 60% 96%;
+    --primary: 267 100% 70%;
+    --primary-foreground: 267 100% 4%;
+    --secondary: 267 50% 15%;
+    --secondary-foreground: 267 60% 96%;
+    --muted: 267 50% 15%;
+    --muted-foreground: 267 30% 70%;
+    --accent: 267 50% 15%;
+    --accent-foreground: 267 60% 96%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 267 50% 20%;
+    --input: 267 50% 20%;
+    --ring: 267 100% 70%;
+    --chart-1: 267 100% 70%;
+    --chart-2: 267 72% 35%;
+    --chart-3: 267 82% 45%;
+    --chart-4: 267 60% 85%;
+    --chart-5: 267 50% 60%;
+
+    /* New color palette variables (dark mode) */
+    --clr-primary-900: #d8c4f1;
+    --clr-primary-600: #ad69ff;
+    --clr-primary-400: #6a14d1;
+    --clr-primary-100: #5a2797;
+
+    /* Primary variables (dark mode) */
+    --clr-primary-a0: #d8c4f1;
+    --clr-primary-a10: #ad69ff;
+    --clr-primary-a20: #9a56ed;
+    --clr-primary-a30: #8742db;
+    --clr-primary-a40: #6a14d1;
+    --clr-primary-a50: #5a2797;
+
+    /* Surface variables (dark mode) */
+    --clr-surface-a0: #0a0512;
+    --clr-surface-a10: #150a24;
+    --clr-surface-a20: #1f0f36;
+    --clr-surface-a30: #2a1448;
+    --clr-surface-a40: #35195a;
+    --clr-surface-a50: #401e6c;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
