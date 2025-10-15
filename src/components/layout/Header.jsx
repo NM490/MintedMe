@@ -21,7 +21,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-4 z-50">
-      <div style={{ gridTemplateColumns: 'auto 1fr auto' }} className="mx-auto max-w-6xl px-4 py-2 grid items-center bg-white/10 dark:bg-black/40 border border-white/10 dark:border-black/30 backdrop-blur-md rounded-full shadow-lg">
+      <div style={{ gridTemplateColumns: 'auto 1fr auto' }} className="mx-auto max-w-6xl px-4 py-2 grid items-center dark:bg-gradient-to-tl from-primary to-secondary border border-white/10 dark:border-black/30 backdrop-blur-xl rounded-full shadow-lg">
 
         {/* Left - Logo */}
         <Link href="/" aria-label="Home" className="flex items-center gap-3 hover:opacity-90 transition justify-start pl-2">

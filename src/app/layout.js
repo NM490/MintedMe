@@ -8,7 +8,15 @@ import Footer from "@/components/layout/Footer";
 export const metadata = {
   title: "MintedMe - NFT Portfolio",
   description: "RAITE Project",
+  icons: {
+    icon: "/minted.svg", // or "/favicon.ico"
+    shortcut: "/minted.svg",
+    apple: "/minted.svg",
+  },
 };
+
+
+
 
 export default function RootLayout({ children }) {
   return (
@@ -19,7 +27,7 @@ export default function RootLayout({ children }) {
           {children}
           <Footer />
         </Providers>
-        <Toaster/>
+        <Toaster />
       </body>
     </html>
   );
