@@ -51,7 +51,7 @@ export default function WalletAccount({ ...props }) {
       <div {...props}>
         <Wallet >
           <ConnectWallet
-            className={`h-[38px] px-4 py-2 border rounded-md flex items-center justify-center dark:border-purple-500 dark:hover:bg-primary/20 hover:text-white transition dark:border-1 dark:bg-transparent dark:text-white`}
+            className={`h-[38px] px-4 py-2 border rounded-md flex items-center justify-center border-primary/60 hover:dark:border-purple-500 dark:hover:bg-primary/20 hover:text-white transition dark:border-1 dark:bg-transparent dark:text-white`}
           >
             <Name className="text-purple-500 dark:text-white" />
           </ConnectWallet>
