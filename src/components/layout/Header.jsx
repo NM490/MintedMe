@@ -32,7 +32,7 @@ export default function Header() {
                 alt="Logo"
                 width={400}
                 height={0}
-                className="absolute inset-0 transform scale-220 -translate-y-1 invert"
+                className="absolute inset-0 transform scale-200 invert"
               />
             </div>
           </div>
