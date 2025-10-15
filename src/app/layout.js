@@ -13,11 +13,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`flex flex-col gap-5`}>
+      <body className={``}>
         <Providers>
-          <Header />
+          {/* <Header /> */}
           {children}
-          <Footer />
+          {/* <Footer /> */}
         </Providers>
         <Toaster/>
       </body>

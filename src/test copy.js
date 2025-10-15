@@ -98,7 +98,8 @@ export function Header() {
 
             {/* Actions */}
             <div className="flex items-center gap-3">
-           
+              <ThemeToggle />
+              
               <Wallet>
                 <ConnectWallet className="glass-card hover:glass transition-all duration-300 border-purple-500/20 hover:border-purple-500/40">
                   <Avatar className="h-6 w-6" />

@@ -1,17 +1,17 @@
 'use client';
-import { CardInfo } from "@/components/layout/CardInfo";
+
+import { useEffect } from 'react';
 import { motion } from 'motion/react';
-import { card1, card2, card3 } from "@/components/layout/CardInfo";
-import { sdk } from '@farcaster/miniapp-sdk';
-import { Sparkles, Blocks, Zap } from 'lucide-react';
+import { Portfolio } from '@/components/Portfolio';
+import { Header } from '@/components/Header';
+import { MobileNav } from '@/components/MobileNav';
+import { Toaster } from '@/components/ui/sonner';
+import { Sparkles, Zap } from 'lucide-react';
+import { sdk } from "@farcaster/miniapp-sdk";
 import { useFirstLoad } from '@/hooks/useFirstLoad';
-import { useEffect } from "react";
 
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Wallet, ConnectWallet, WalletDropdown, WalletDropdownDisconnect } from '@coinbase/onchainkit/wallet';
-import { Avatar, Name, Identity, Address, EthBalance } from '@coinbase/onchainkit/identity';
+
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -35,16 +35,9 @@ const itemVariants = {
     }
   }
 };
+
 export default function Home() {
   const isFirstLoad = useFirstLoad();
-
-  
-  const pathname = usePathname();
-
-  const isActive = (path) => {
-    return pathname === path;
-  };
-
 
   useEffect(() => {
     const initializeFarcaster = async () => {
@@ -53,9 +46,9 @@ export default function Home() {
         if (document.readyState !== 'complete') {
           await new Promise(resolve => {
             if (document.readyState === 'complete') {
-              resolve(void 0);
+              resolve();
             } else {
-              window.addEventListener('load', () => resolve(void 0), { once: true });
+              window.addEventListener('load', () => resolve(), { once: true });
             }
           });
         }
@@ -78,11 +71,12 @@ export default function Home() {
   }, []);
 
   return (
-     <div className="min-h-screen relative overflow-hidden bg-[#0a0014]">
+    <div className="min-h-screen relative overflow-hidden bg-[#0a0014]">
       {/* Dark purple animated gradient background */}
       <div className="fixed inset-0 animated-gradient -z-10" />
-        {/* Purple blur orbs for depth */}
-      {/* <motion.div
+
+      {/* Purple blur orbs for depth */}
+      <motion.div
         className="blur-circle w-[500px] h-[500px] bg-purple-600/30 top-0 -left-48"
         animate={{
           scale: [1, 1.2, 1],
@@ -119,13 +113,13 @@ export default function Home() {
           ease: "easeInOut",
           delay: 2
         }}
-      /> */}
+      />
 
+      <Toaster />
+      <Header />
+      <MobileNav />
 
-
-        <Headers/>
-
-       {/* Hero Section */}
+      {/* Hero Section */}
       <section className="container mx-auto px-4 pt-20 pb-12">
         <motion.div
           className="text-center space-y-6"
@@ -141,7 +135,7 @@ export default function Home() {
             </span>
             <Zap className="h-4 w-4 text-violet-400" />
           </motion.div>
-          
+
           {/* Main heading */}
           <motion.h2 variants={itemVariants} className="text-5xl md:text-7xl font-black text-white leading-tight">
             <span className="block">Build Your</span>
@@ -149,10 +143,10 @@ export default function Home() {
               On-Chain Legacy
             </span>
           </motion.h2>
-          
+
           {/* Description */}
           <motion.p variants={itemVariants} className="text-lg md:text-xl text-purple-200 max-w-2xl mx-auto leading-relaxed">
-            Transform your projects into verifiable NFTs. Showcase your work with 
+            Transform your projects into verifiable NFTs. Showcase your work with
             blockchain-backed proof of authenticity.
           </motion.p>
 
@@ -185,6 +179,12 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </section>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 pb-32 md:pb-24">
+        <Portfolio />
+      </main>
+
       {/* Footer */}
       <motion.footer
         className="border-t border-purple-500/20 glass mt-16"
@@ -203,30 +203,6 @@ export default function Home() {
           </div>
         </div>
       </motion.footer>
-     
-      </div>
-      
-    // <div className="w-full grow flex flex-co justify-center h-fit">
-    //   <main className="container mx-auto px-6 py-12">
-    //     <div className="max-w-4xl my-auto text-center justify-center space-y-12 w-full mx-auto">
-    //       <div className="space-y-6 h-screen text-start items-start justify-start">
-    //         <h1 className="text-6xl font-bold text-balance leading-tight text-start">
-    //           Showcase Your Projects as{" "}
-    //           <span className="text-[#0142d9]">Verifiable NFTs</span>
-    //         </h1>
-    //         <p className="text-xl text-muted-foreground text-balance max-w-2xl leading-relaxed text-start">
-    //           Transform your academic and personal projects into
-    //           blockchain-verified credentials. Create an immutable portfolio
-    //           that employers and educators can trust.
-    //         </p>
-    //       </div>
-    //       <div className="grid md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-    //         <CardInfo {...card1} />
-    //         <CardInfo {...card2} />
-    //         <CardInfo {...card3} />
-    //       </div>
-    //     </div>
-    //   </main>
-    // </div>
+    </div>
   );
 }
