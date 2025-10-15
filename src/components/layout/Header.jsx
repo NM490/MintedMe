@@ -30,9 +30,9 @@ export default function Header() {
               <Image
                 src="/minted.svg"
                 alt="Logo"
-                width={100}
+                width={400}
                 height={0}
-                className="absolute inset-0 w-10 h-10 transform scale-220 -translate-y-1"
+                className="absolute inset-0 transform scale-220 -translate-y-1 invert"
               />
             </div>
           </div>
