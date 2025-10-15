@@ -13,12 +13,12 @@ export default function Hero() {
             <div className="flex-1 space-y-8 text-center lg:text-start">
               <div className="space-y-6">
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-balance leading-tight tracking-tight">
-                  MintedMe{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0142d9] to-[#6b21a8]">
+                  <span className="font-minted">MintedMe</span>
+                  <span className="inline-block -ml-1 text-transparent bg-clip-text bg-gradient-to-r from-[#0142d9] to-[#6b21a8]">
                     Verifiable NFTs
                   </span>
                 </h1>
-                <p className="text-xl md:text-2xl text-foreground/80 text-balance max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                <p className="text-sm md:text-xl text-balance max-w-2xl leading-relaxed mx-auto lg:mx-0">
                   Transform your academic and personal projects into blockchain-verified credentials. Create an immutable portfolio that employers and educators can trust.
                 </p>
               </div>
@@ -28,7 +28,7 @@ export default function Hero() {
                 <button className="px-8 py-4 bg-gradient-to-r from-[#0142d9] to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
                   Get Started Free
                 </button>
-                <button className="px-8 py-4 border border-gray-300 font-semibold rounded-xl hover:bg-gray-50/80 hover:border-gray-400 transition-all duration-300 transform hover:scale-105">
+                <button className="px-8 py-4 border border-gray-300 font-semibold rounded-xl hover:text-purple-600 hover:bg-white hover:border-white transition-all duration-300 transform hover:scale-105">
                   View Examples
                 </button>
               </div>
@@ -51,11 +51,11 @@ export default function Hero() {
 
           {/* Features Section */}
           <div className="space-y-4 mb-16 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold bg-clip-text">
-              Why Choose Our Platform
+            <h2 className="text-3xl md:text-4xl font-minted font-bold bg-clip-text">
+              Why Choose Our Platform?
             </h2>
-            <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-              Everything you need to showcase your work with credibility and style
+            <p className="text-lg max-w-2xl mx-auto">
+              Everything you need to showcase your work with <span className="text-purple-600 ">credibility</span> and <span className="text-purple-600">style</span>
             </p>
           </div>
 
