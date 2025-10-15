@@ -10,7 +10,7 @@ export async function POST(req) {
     const metadata = {
       name: title,
       description,
-      image: "ipfs://bafkreifvvhwxhwqhztgoddffktbhxi5etyxdpz37gga6gzvhktc4e75zxa",
+      image: image,
       attributes: [
         { trait_type: "GitHub Repository", value: github },
         { trait_type: "Live Demo / Portfolio Link", value: liveDemo },

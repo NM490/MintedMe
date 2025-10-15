@@ -202,65 +202,95 @@ export function MintProjectDialog({refreshNFTs}) {
     }
     return false; // failed after maxRetries
   }
+async function uploadImage(file) {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
 
-  async function handleMint() {
-    setIsLoading(true);
+    const res = await fetch("/api/pinata/upload-image", {
+      method: "POST",
+      body: formData,
+    });
 
-    if (errors.title || errors.description || errors.githubUrl) {
-      toast("Invalid Form", {
-        description: "Please fix the errors before minting.",
-        variant: "destructive",
-      });
-      setIsLoading(false);
-      return;
-    }
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
 
-    
-
-    try {
-      // 1️⃣ Upload metadata
-      const res = await fetch("/api/pinata/upload-metadata", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          address,
-          title: formData.title,
-          description: formData.description,
-          github: formData.githubUrl,
-          liveDemo: formData.portfolioUrl,
-          skills: formData.skills,
-        }),
-      });
-
-      const data = await res.json();
-      if (!data.success) throw new Error("Pinata upload failed");
-
-      const { ipfsHash } = data;
-
-      toast("Metadata uploaded", {
-        description: "Waiting for IPFS to propagate...",
-      });
-
-      const isPinned = await waitForPinataMetadata(ipfsHash);
-      if (!isPinned) throw new Error("Metadata not fully pinned on Pinata");
-
-      toast("Metadata confirmed", {
-        description: "Minting your NFT now...",
-      });
-
-      await new Promise((resolve) => setTimeout(resolve, 15000));
-
-      await mintProject(ipfsHash);
-
-    } catch (err) {
-      toast("Minting failed", {
-        description:
-          "Metadata may not be uploaded or accessible. Please try again.",
-        variant: "destructive",
-      });
-      setIsLoading(false);
-    }
+    console.log("IPFS Hash:", data.ipfsHash);
+    return data.ipfsHash;
+  } catch (err) {
+    console.error("Upload failed:", err.message);
+    return null;
   }
+}
+ async function handleMint() {
+  setIsLoading(true);
+
+  // Validate required fields
+  if (errors.title || errors.description || errors.githubUrl) {
+    toast("Invalid Form", {
+      description: "Please fix the errors before minting.",
+      variant: "destructive",
+    });
+    setIsLoading(false);
+    return;
+  }
+
+  try {
+    let imageIpfsHash = "";
+
+    // Upload image if selected
+    if (formData.imageFile) {
+      toast("Uploading image...", { description: "Sending to IPFS via Pinata..." });
+
+      const res = await uploadImage(formData.imageFile);
+      if (!res) throw new Error("Image upload failed");
+
+      imageIpfsHash = res;
+      toast("Image uploaded", { description: "Stored permanently on IPFS." });
+    }
+
+    // Upload metadata
+    const metadataRes = await fetch("/api/pinata/upload-metadata", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        address,
+        title: formData.title,
+        description: formData.description,
+        github: formData.githubUrl,
+        liveDemo: formData.portfolioUrl,
+        skills: formData.skills,
+        image: imageIpfsHash ? `ipfs://${imageIpfsHash}` : "",
+      }),
+    });
+
+    const metadataData = await metadataRes.json();
+    if (!metadataData.success) throw new Error("Metadata upload failed");
+
+    const { ipfsHash } = metadataData;
+
+    toast("Metadata uploaded", { description: "Waiting for IPFS propagation..." });
+
+    const pinned = await waitForPinataMetadata(ipfsHash);
+    if (!pinned) throw new Error("Metadata not fully pinned on Pinata");
+
+    toast("Metadata confirmed", { description: "Minting your NFT now..." });
+
+    // Wait a short moment to ensure propagation
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+
+    // Mint NFT
+    await mintProject(ipfsHash);
+  } catch (err) {
+    console.error("Minting error:", err);
+    toast("Minting failed", {
+      description: err.message || "Something went wrong. Please try again.",
+      variant: "destructive",
+    });
+    setIsLoading(false);
+  }
+}
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -328,7 +358,47 @@ export function MintProjectDialog({refreshNFTs}) {
               </div>
             </CardContent>
           </Card>
-
+{/* Image Upload */}
+<Card>
+  <CardHeader>
+    <CardTitle className="text-lg">Project Image</CardTitle>
+    <CardDescription>
+      Upload a project thumbnail or logo (PNG, JPG, or WEBP)
+    </CardDescription>
+  </CardHeader>
+  <CardContent>
+    <div className="space-y-2">
+      <Input
+        type="file"
+        accept="image/*"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) {
+            setFormData((prev) => ({ ...prev, imageFile: file }));
+          }
+        }}
+      />
+      {formData.imageFile && (
+        <div className="mt-2 flex items-center gap-3">
+          <img
+            src={URL.createObjectURL(formData.imageFile)}
+            alt="Preview"
+            className="w-20 h-20 object-cover rounded-lg border"
+          />
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, imageFile: null }))
+            }
+          >
+            Remove
+          </Button>
+        </div>
+      )}
+    </div>
+  </CardContent>
+</Card>
           {/* Links */}
           <Card>
             <CardHeader>
