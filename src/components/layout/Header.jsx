@@ -14,26 +14,17 @@ export default function Header() {
     { text: "About", url: "/about", id: "about-nav" },
   ];
 
-  const [isDark, setIsDark] = useState(() =>
-    typeof window !== "undefined"
-      ? document.documentElement.classList.contains("dark")
-      : false
-  );
-
+  // Force dark mode on initial render
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDark]);
+    document.documentElement.classList.add("dark");
+  }, []);
 
   return (
     <header className="sticky top-4 z-50">
-  <div style={{ gridTemplateColumns: 'auto 1fr auto' }} className="mx-auto max-w-6xl px-4 py-2 grid items-center bg-white/10 dark:bg-black/40 border border-white/10 dark:border-black/30 backdrop-blur-md rounded-full shadow-lg">
+      <div style={{ gridTemplateColumns: 'auto 1fr auto' }} className="mx-auto max-w-6xl px-4 py-2 grid items-center bg-white/10 dark:bg-black/40 border border-white/10 dark:border-black/30 backdrop-blur-md rounded-full shadow-lg">
 
         {/* Left - Logo */}
-  <Link href="/" aria-label="Home" className="flex items-center gap-3 hover:opacity-90 transition justify-start pl-2">
+        <Link href="/" aria-label="Home" className="flex items-center gap-3 hover:opacity-90 transition justify-start pl-2">
           <div className="flex flex-col items-center gap-1 h-10 overflow-visible">
             <div className="relative h-10 w-10 overflow-visible">
               <Image
@@ -47,8 +38,8 @@ export default function Header() {
           </div>
         </Link>
 
-  {/* Center - Nav */}
-  <nav className="hidden md:flex items-center gap-4 justify-center">
+        {/* Center - Nav */}
+        <nav className="hidden md:flex items-center gap-4 justify-center">
           {navBtns.map((btn) => (
             <Link
               key={btn.id}
