@@ -38,7 +38,7 @@ export default function Header() {
       {/* Main Header */}
       <div
         style={{ gridTemplateColumns: 'auto 1fr auto' }}
-        className="mx-auto max-w-6xl px-4 py-2 grid items-center bg-white/5 dark:bg-black/20 border border-white/20 dark:border-white/10 backdrop-blur-2xl rounded-full shadow-2xl shadow-black/10"
+        className="mx-auto max-w-6xl px-4 py-2 grid items-center bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-cyan-600/20 border border-white/20 backdrop-blur-2xl rounded-full shadow-2xl shadow-black/10"
       >
         {/* Left - Logo */}
         <Link href="/" aria-label="Home" className="flex items-center gap-3 hover:opacity-90 transition justify-start pl-2">
@@ -61,7 +61,7 @@ export default function Header() {
             <Link
               key={btn.id}
               href={btn.url}
-              className="text-md text-foreground hover:transition hover:text-primary underline-offset-4 hover:underline dark:font-blod"
+              className="text-md text-white hover:transition hover:text-cyan-300 underline-offset-4 hover:underline font-medium"
             >
               {btn.text}
             </Link>
@@ -73,7 +73,7 @@ export default function Header() {
           <WalletAccount />
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 transition"
+            className="md:hidden p-2 rounded-lg bg-white/20 hover:bg-white/30 transition"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -96,13 +96,13 @@ export default function Header() {
           />
 
           {/* Mobile Menu Panel */}
-          <div className="absolute top-20 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm bg-white/10 dark:bg-black/40 border border-white/20 dark:border-white/10 backdrop-blur-2xl rounded-2xl shadow-2xl shadow-black/20 p-6">
+          <div className="absolute top-20 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm bg-gradient-to-br from-purple-600/30 via-blue-600/30 to-cyan-600/30 border border-white/20 backdrop-blur-2xl rounded-2xl shadow-2xl shadow-black/20 p-6">
             <nav className="flex flex-col gap-4">
               {navBtns.map((btn) => (
                 <Link
                   key={btn.id}
                   href={btn.url}
-                  className="text-lg text-white hover:text-brand py-3 px-4 rounded-lg hover:bg-white/10 transition text-center"
+                  className="text-lg text-white hover:text-cyan-300 py-3 px-4 rounded-lg hover:bg-white/10 transition text-center font-medium"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {btn.text}
@@ -112,7 +112,7 @@ export default function Header() {
 
             {/* Close button for mobile */}
             <button
-              className="w-full mt-6 p-3 bg-white/10 hover:bg-white/20 rounded-lg text-white transition"
+              className="w-full mt-6 p-3 bg-white/20 hover:bg-white/30 rounded-lg text-white transition font-medium"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Close Menu
