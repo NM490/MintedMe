@@ -9,19 +9,6 @@ import { getConfig } from "./wagmi";
 export default function Providers({ children }) {
   const [config] = useState(() => getConfig());
   const [queryClient] = useState(() => new QueryClient());
-  const [isDark, setIsDark] = useState(() =>
-    typeof window !== "undefined"
-      ? document.documentElement.classList.contains("dark")
-      : false
-  );
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsDark(document.documentElement.classList.contains("dark"));
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <WagmiProvider config={config}>
@@ -32,9 +19,8 @@ export default function Providers({ children }) {
           projectId={process.env.NEXT_PUBLIC_CDP_PROJECT_ID}
           config={{
             appearance: {
-              name: "MintedMe",
-              logo: "/favicon.ico",
-              mode: isDark ? "dark" : "light",
+              logo: "/minted.svg",
+              mode: "dark", // Hardcoded to dark mode
               theme: "base",
             },
             wallet: {
