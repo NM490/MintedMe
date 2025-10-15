@@ -61,7 +61,6 @@ export default function WalletAccount({ ...props }) {
               <Avatar />
               <Name />
               <Address />
-              <EthBalance />
             </Identity>
             <WalletDropdownLink
               target="_blank"

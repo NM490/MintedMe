@@ -110,7 +110,7 @@ function WalletActions({ address, changeAction }) {
     <>
       <SheetHeader>
         <h1 className="font-bold dark:text-white flex flex-col px-3">
-          <EthBalance address={address} className={`text-3xl dark:text-white`} />
+          <span className={`text-2xl dark:text-white`}>{/* ETH amount hidden */}</span>
           <span className="text-md text-brand">${usd}</span>
         </h1>
       </SheetHeader>
