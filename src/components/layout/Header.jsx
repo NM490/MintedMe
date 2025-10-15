@@ -61,7 +61,7 @@ export default function Header() {
             <Link
               key={btn.id}
               href={btn.url}
-              className="text-md text-white hover:transition hover:text-cyan-300 underline-offset-4 hover:underline font-medium"
+              className="text-md text-white hover:transition hover:text-primary hover:brightness-150 font-medium"
             >
               {btn.text}
             </Link>
