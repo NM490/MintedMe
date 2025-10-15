@@ -51,9 +51,9 @@ export default function WalletAccount({ ...props }) {
       <div {...props}>
         <Wallet>
           <ConnectWallet
-            className={`h-[38px] px-4 py-2 rounded-md flex items-center justify-center bg-white border border-brand text-brand hover:bg-brand/10 transition dark:border-0 dark:bg-brand/80 dark:text-white`}
+            className={`h-[38px] px-4 py-2 rounded-md flex items-center justify-center bg-white border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white transition dark:border-0 dark:bg-purple-500 dark:text-white`}
           >
-            <Name className="text-brand dark:text-white" />
+            <Name className="text-purple-500 dark:text-white" />
           </ConnectWallet>
           <WalletDropdown>
             <WalletAdvancedWalletActions />
@@ -66,11 +66,11 @@ export default function WalletAccount({ ...props }) {
               target="_blank"
               href="https://keys.coinbase.com"
               icon="wallet"
-              className={"relative"}
+              className={"relative text-purple-500"}
             >
               Wallet
             </WalletDropdownLink>
-            <WalletDropdownDisconnect className="text-brand dark:text-white" />
+            <WalletDropdownDisconnect className="text-purple-500 dark:text-white" />
           </WalletDropdown>
         </Wallet>
       </div>

@@ -25,8 +25,8 @@ export default function WalletSheet() {
     >
       {isConnected && (
         <Sheet >
-          <SheetTrigger asChild className=" border border-brand bg-white text-brand hover:bg-brand/10 transition dark:border-0 dark:bg-brand/80 dark:text-white">
-            <Button className={`h-full font-bold flex justify-center items-center`}>
+          <SheetTrigger asChild className="group border border-purple-500 bg-white text-white hover:text-white transition dark:border-white dark:bg-purple-500 dark:text-white">
+            <Button className={`h-full font-bold flex justify-center items-center hover:text-white group-hover:text-white`}>
               <FaEthereum size={24} />
             </Button>
           </SheetTrigger>
