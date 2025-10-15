@@ -21,6 +21,17 @@
   }
 }
 
+/* put mintedme-sans.woff2 and mintedme-sans.woff in public/fonts/ */
+@font-face {
+  font-family: 'Nevera';
+  src: url('/fonts/Nevera.woff2') format('woff2'),
+       url('/fonts/Nevera.woff') format('woff'),
+       url('/fonts/Nevera.otf') format('opentype'); /* optional fallback */
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer utilities {
   html,
   body {
