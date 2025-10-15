@@ -8,8 +8,8 @@ const AboutPage = () => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
         {/* Left - Content */}
         <div className="space-y-6">
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent leading-tight">
-            About MintedMe
+          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent leading-tight font-minted">
+            MintedMe
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
           <p className="text-xl text-muted-foreground leading-relaxed">
@@ -35,7 +35,7 @@ const AboutPage = () => (
       <div className="space-y-8">
         {/* Mission Card */}
         <div className="bg-white/5 dark:bg-black/20 border border-white/10 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-8 shadow-2xl shadow-black/10">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">Our Mission</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground font-minted">Our Mission</h2>
           <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
             This is a verification platform where students and professionals can
             have their projects, portfolios, or creations verified and transformed
@@ -48,7 +48,7 @@ const AboutPage = () => (
 
         {/* Team Section */}
         <div className="bg-white/5 dark:bg-black/20 border border-white/10 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-8 shadow-2xl shadow-black/10">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">Team Members</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground font-minted">Team Members</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center p-6 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/5">
               <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-md">
@@ -81,7 +81,7 @@ const AboutPage = () => (
 
         {/* Features Grid */}
         <div className="bg-white/5 dark:bg-black/20 border border-white/10 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-8 shadow-2xl shadow-black/10">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">Why Choose MintedMe?</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground font-minted">Why Choose MintedMe?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-6 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/5">
               <h3 className="text-xl font-semibold mb-3 text-foreground">🔒 Secure Verification</h3>
