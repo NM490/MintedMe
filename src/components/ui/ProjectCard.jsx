@@ -30,7 +30,7 @@ export default function ProjectCard({ nft, address, img, ...props }) {
         <div className="flex items-start justify-between">
           <div className="space-y-2">
             {/* Project Image */}
-            <div className="relative w-full h-48 mb-3 rounded-xl overflow-hidden bg-neutral-100">
+            <div className="relative w-full h-48 mb-3 rounded-xl overflow-hidden bg-primary/10">
               {img ? (
                 <Image
                   src={img}
@@ -39,7 +39,7 @@ export default function ProjectCard({ nft, address, img, ...props }) {
                   className="object-cover"
                 />
               ) : (
-                <div className="w-full h-full bg-neutral-200 animate-pulse" />
+                <div className="w-full h-full bg-gradient-to-r from-primary/20 to-primary/30 animate-pulse" />
               )}
             </div>
 
@@ -50,15 +50,13 @@ export default function ProjectCard({ nft, address, img, ...props }) {
               </CardTitle>
               <Badge
                 variant="outline"
-                className={`font-mono text-xs ${!nft && "animate-pulse"}`}
+                className={`font-mono text-xs ${!nft && "animate-pulse bg-primary/10 border-primary/20"}`}
               >
                 {nft ? nft.tokenId : "\u00A0"}
               </Badge>
               <Badge
                 variant="default"
-                className={`gap-1 bg-accent text-accent-foreground ${
-                  !nft && "animate-pulse"
-                }`}
+                className={`gap-1 bg-primary text-primary-foreground ${!nft && "animate-pulse bg-primary/30"}`}
               >
                 <Award className="w-3 h-3" />
                 Verified
@@ -80,9 +78,7 @@ export default function ProjectCard({ nft, address, img, ...props }) {
             <Badge
               key={index}
               variant="secondary"
-              className={`${
-                nft ? "" : "bg-neutral-200 rounded-md animate-pulse"
-              }`}
+              className={`${nft ? "" : "bg-primary/10 border-primary/20 rounded-md animate-pulse"}`}
             >
               {skill}
             </Badge>
@@ -167,7 +163,7 @@ function SkeletonLoad({ customClassName = "", value = 5 }) {
 
   return (
     <span
-      className={`${customClassName} bg-neutral-200 rounded-md animate-pulse px-3 wrap-anywhere`}
+      className={`${customClassName} bg-gradient-to-r from-primary/20 to-primary/30 rounded-md animate-pulse px-3 wrap-anywhere`}
     >
       {placeholder}
     </span>

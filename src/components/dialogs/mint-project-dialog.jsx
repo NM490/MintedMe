@@ -466,7 +466,7 @@ export function MintProjectDialog({refreshNFTs}) {
           </Button>
           <Button
             onClick={handleMint}
-            className="gap-2 bg-brand hover:bg-brand/50 dark:hover:bg-brand"
+            className="gap-2 text-white"
           >
             {isLoading ? (
               <>
