@@ -10,6 +10,7 @@ export default function Header() {
   const navBtns = [
     { text: "Home", url: "/", id: "home-nav" },
     { text: "My Portfolio", url: "/project", id: "project-nav" },
+    { text: "Browse Portfolios", url: "/browse", id: "browse-project-nav" },
     { text: "About", url: "/about", id: "about-nav" },
   ];
 
@@ -34,8 +35,11 @@ export default function Header() {
         {/* Left - Logo */}
         <Link href="/" aria-label="Home" className="flex items-center gap-3 justify-between hover:opacity-90 transition md:w-1/4">
           <div className="flex items-center gap-3 justify-between">
-              <Image src="/favicon.ico" alt="Logo" width={65} height={65} />
-           
+              <Image src="/favicon.ico" alt="Logo" width={50} height={50} />
+            <div>
+              <h1 className="font-semibold text-lg text-foreground leading-none">NFT Portfolio </h1>
+              <p className=" text-xs text-foreground">RAITE Project</p>
+            </div>
           </div>
         </Link>
 

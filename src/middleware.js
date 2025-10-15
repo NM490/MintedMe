@@ -30,9 +30,22 @@ export function middleware(req) {
     }
   }
 
+  // /project without slug
+  if (pathname === "/browse/") {
+   if (!wallet) {
+       NextResponse.redirect(new URL(`/browse/${slug}`, req.url));
+   }
+    return NextResponse.next(); // allow if not connected
+  }
+
+  // /project/[slug] must be connected
+  if (pathname.startsWith("/browse/")) {
+       NextResponse.redirect(new URL(`/browse/${slug}`, req.url));
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/", "/about", "/project/:path*"],
+  matcher: ["/", "/about", "/project/:path*", "/browse/:path*"],
 };
