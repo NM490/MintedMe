@@ -15,20 +15,34 @@ import { useAccount } from "wagmi";
 export default function Portfolio() {
   const { address, isConnected } = useAccount();
   const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(true); // initial load
+const [refreshing, setRefreshing] = useState(false); // refresh button
 
-  const fetchNFTs = useCallback(async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(`/api/alchemy/get-project-nft?owner=${address}`);
-      const data = await res.json();
-      setProjects(data.ownedNfts || []);
-    } catch (err) {
-      console.error("Failed to fetch NFTs:", err);
-    } finally {
-      setLoading(false);
+const fetchNFTs = useCallback(async () => {
+  try {
+    if (!projects.length) {
+      setLoading(true); // initial load
+    } else {
+      setRefreshing(true); // refresh
     }
-  });
+
+    const res = await fetch(`/api/alchemy/get-project-nft?owner=${address}`);
+    const data = await res.json();
+
+    // During refresh, temporarily keep old projects but set them undefined
+    if (projects.length) {
+      setProjects(projects.map(p => null)); // show skeletons
+      await new Promise(r => setTimeout(r, 300)); // optional small delay for UX
+    }
+
+    setProjects(data.ownedNfts || []);
+  } catch (err) {
+    console.error("Failed to fetch NFTs:", err);
+  } finally {
+    setLoading(false);
+    setRefreshing(false);
+  }
+}, [address, projects]);
 
   useEffect(() => {
     if (!address || !isConnected) return;
@@ -40,54 +54,96 @@ export default function Portfolio() {
   };
 
   const url = address
-    ? `http://localhost:3000/browse/project/${addressToSlug(address)}`
+    ? `http://localhost:3000/browse/${addressToSlug(address)}`
     : "";
-
+  const [layout, setLayout] = useState("grid3");
+  const getGridClass = () => {
+    switch (layout) {
+      case "grid3":
+        return "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6";
+      case "grid2":
+        return "grid grid-cols-1 sm:grid-cols-2 gap-6";
+      case "rows":
+        return "flex flex-col gap-6";
+      default:
+        return "grid grid-cols-3 gap-6";
+    }
+  };
   return (
-    <>
-      <div className="w-full grow flex flex-co justify-center ">
-        <main className="container mx-auto px-6 py-12">
-          <div className="space-y-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-3xl font-bold text-foreground">
-                  Your NFT Portfolio
-                </h1>
-                <p className="text-muted-foreground mt-2">
-                  Manage and showcase your blockchain-verified projects
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <Button onClick={refreshNFTs} variant={"outline"}><RotateCw /></Button>
-                <SharePortfolioButton url={url} variant="outline" />
-                <MintProjectDialog refreshNFTs={refreshNFTs} />
-              </div>
+    <div className="w-full grow flex flex-col justify-center">
+      <main className="container mx-auto px-6 py-12">
+        <div className="space-y-8">
+          {/* Header */}
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-foreground">
+                Your NFT Portfolio
+              </h1>
+              <p className="text-muted-foreground mt-2">
+                Manage and showcase your blockchain-verified projects
+              </p>
             </div>
-
-            {/* Portfolio Preview Card */}
-            <ShareCard url={url} />
-
-            {loading ? (
-              <ProjectCard />
-            ) : (
-              <div className="grid gap-6">
-                {projects.map((nft) => (
-                  <ProjectCard
-                    nft={nft}
-                    key={`${nft.contract.address}-${nft.tokenId}`}
-                    address={address}
-                    img={nft.ima}
-                  />
-                ))}
-              </div>
-            )}
-
-            {projects.length === 0 && !loading && (
-              <MintFirstProject refreshNFTs={refreshNFTs} />
-            )}
+            <div className="flex items-center gap-3">
+              <Button
+                onClick={refreshNFTs}
+                variant="outline"
+                disabled={refreshing}
+              >
+                <RotateCw className={refreshing ? "animate-spin" : ""} />
+              </Button>
+              <SharePortfolioButton url={url} variant="outline" />
+              <MintProjectDialog refreshNFTs={refreshNFTs} />
+            </div>
           </div>
-        </main>
-      </div>
-    </>
+
+          {/* Layout Toggle */}
+          <div className="flex gap-2">
+            <Button
+              variant={layout === "grid3" ? "default" : "outline"}
+              onClick={() => setLayout("grid3")}
+            >
+              3 Grid
+            </Button>
+            <Button
+              variant={layout === "grid2" ? "default" : "outline"}
+              onClick={() => setLayout("grid2")}
+            >
+              2 Grid
+            </Button>
+            <Button
+              variant={layout === "rows" ? "default" : "outline"}
+              onClick={() => setLayout("rows")}
+            >
+              Rows
+            </Button>
+          </div>
+
+          {/* Portfolio Preview Card */}
+          <ShareCard url={url} />
+
+          {loading && !projects.length ? (
+            <ProjectCard /> // show placeholder only on initial load
+          ) : (
+          <div className={getGridClass()}>
+  {(loading && !projects.length) || refreshing
+    ? projects.map((_, idx) => <ProjectCard key={idx} />) // skeletons
+    : projects.map((nft) => (
+        <ProjectCard
+          nft={nft}
+          key={`${nft.contract.address}-${nft.tokenId}`}
+          address={address}
+          size={layout}
+          img={nft.image.cachedUrl}
+        />
+      ))}
+</div>
+          )}
+
+          {projects.length === 0 && !loading && (
+            <MintFirstProject refreshNFTs={refreshNFTs} />
+          )}
+        </div>
+      </main>
+    </div>
   );
 }

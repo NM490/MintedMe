@@ -49,8 +49,6 @@ export default function Portfolio() {
       <div className="w-full grow flex flex-co justify-center ">
         <main className="container mx-auto px-6 py-12">
           <div className="space-y-8">
-            
-
             {loading ? (
               <ProjectCard />
             ) : (

@@ -39,7 +39,7 @@ const ABI = [
   },
 ];
 
-export function MintProjectDialog({refreshNFTs}) {
+export function MintProjectDialog({ refreshNFTs }) {
   const { address } = useAccount();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -202,95 +202,111 @@ export function MintProjectDialog({refreshNFTs}) {
     }
     return false; // failed after maxRetries
   }
-async function uploadImage(file) {
-  try {
-    const formData = new FormData();
-    formData.append("file", file);
 
-    const res = await fetch("/api/pinata/upload-image", {
-      method: "POST",
-      body: formData,
-    });
+  async function uploadImage(file) {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    const data = await res.json();
-    if (!data.success) throw new Error(data.error);
+      const res = await fetch("/api/pinata/upload-image", {
+        method: "POST",
+        body: formData,
+      });
 
-    console.log("IPFS Hash:", data.ipfsHash);
-    return data.ipfsHash;
-  } catch (err) {
-    console.error("Upload failed:", err.message);
-    return null;
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+
+      console.log("IPFS Hash:", data.ipfsHash);
+      return data.ipfsHash;
+    } catch (err) {
+      console.error("Upload failed:", err.message);
+      return null;
+    }
   }
-}
- async function handleMint() {
-  setIsLoading(true);
+  async function handleMint() {
+    setIsLoading(true);
 
-  // Validate required fields
-  if (errors.title || errors.description || errors.githubUrl) {
-    toast("Invalid Form", {
-      description: "Please fix the errors before minting.",
-      variant: "destructive",
-    });
-    setIsLoading(false);
-    return;
-  }
-
-  try {
-    let imageIpfsHash = "";
-
-    // Upload image if selected
-    if (formData.imageFile) {
-      toast("Uploading image...", { description: "Sending to IPFS via Pinata..." });
-
-      const res = await uploadImage(formData.imageFile);
-      if (!res) throw new Error("Image upload failed");
-
-      imageIpfsHash = res;
-      toast("Image uploaded", { description: "Stored permanently on IPFS." });
+    // Validate required fields
+    if (errors.title || errors.description || errors.githubUrl) {
+      toast("Invalid Form", {
+        description: "Please fix the errors before minting.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
     }
 
-    // Upload metadata
-    const metadataRes = await fetch("/api/pinata/upload-metadata", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        address,
-        title: formData.title,
-        description: formData.description,
-        github: formData.githubUrl,
-        liveDemo: formData.portfolioUrl,
-        skills: formData.skills,
-        image: imageIpfsHash ? `ipfs://${imageIpfsHash}` : "",
-      }),
-    });
+    try {
+      let imageIpfsHash = "";
 
-    const metadataData = await metadataRes.json();
-    if (!metadataData.success) throw new Error("Metadata upload failed");
+      // Upload image if selected
+      if (formData.imageFile) {
+        toast("Uploading image...", {
+          description: "Sending to IPFS via Pinata...",
+        });
 
-    const { ipfsHash } = metadataData;
+        const res = await uploadImage(formData.imageFile);
+        if (!res) throw new Error("Image upload failed");
 
-    toast("Metadata uploaded", { description: "Waiting for IPFS propagation..." });
+        imageIpfsHash = res;
+        toast("Image uploaded", { description: "Stored permanently on IPFS." });
+      }
 
-    const pinned = await waitForPinataMetadata(ipfsHash);
-    if (!pinned) throw new Error("Metadata not fully pinned on Pinata");
+      // Upload metadata
+      const metadataRes = await fetch("/api/pinata/upload-metadata", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          address,
+          title: formData.title,
+          description: formData.description,
+          github: formData.githubUrl,
+          liveDemo: formData.portfolioUrl,
+          skills: formData.skills,
+          image: imageIpfsHash ? `ipfs://${imageIpfsHash}` : "",
+        }),
+      });
 
-    toast("Metadata confirmed", { description: "Minting your NFT now..." });
+      const metadataData = await metadataRes.json();
+      if (!metadataData.success) throw new Error("Metadata upload failed");
 
-    // Wait a short moment to ensure propagation
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+      const { ipfsHash } = metadataData;
 
-    // Mint NFT
-    await mintProject(ipfsHash);
-  } catch (err) {
-    console.error("Minting error:", err);
-    toast("Minting failed", {
-      description: err.message || "Something went wrong. Please try again.",
-      variant: "destructive",
-    });
-    setIsLoading(false);
+      toast("Metadata uploaded", {
+        description: "Waiting for IPFS propagation...",
+      });
+
+      const pinned = await waitForPinataMetadata(ipfsHash);
+      if (!pinned) throw new Error("Metadata not fully pinned on Pinata");
+
+      toast("Metadata confirmed", { description: "Minting your NFT now..." });
+
+      // Wait a short moment to ensure propagation
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+
+      // Mint NFT
+      await mintProject(ipfsHash);
+    } catch (err) {
+      console.error("Minting error:", err);
+      
+      // If an image was uploaded, attempt to remove it from IPFS
+      if (imageIpfsHash) {
+        try {
+          await fetch(`/api/remove-ipfs?ipfsHash=${imageIpfsHash}`, {
+            method: "PUT",
+          });
+        } catch (putErr) {
+          console.error("Failed to remove IPFS image:", putErr.message);
+        }
+      }
+
+      toast("Minting failed", {
+        description: err.message || "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+    }
   }
-}
-
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -358,47 +374,47 @@ async function uploadImage(file) {
               </div>
             </CardContent>
           </Card>
-{/* Image Upload */}
-<Card>
-  <CardHeader>
-    <CardTitle className="text-lg">Project Image</CardTitle>
-    <CardDescription>
-      Upload a project thumbnail or logo (PNG, JPG, or WEBP)
-    </CardDescription>
-  </CardHeader>
-  <CardContent>
-    <div className="space-y-2">
-      <Input
-        type="file"
-        accept="image/*"
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) {
-            setFormData((prev) => ({ ...prev, imageFile: file }));
-          }
-        }}
-      />
-      {formData.imageFile && (
-        <div className="mt-2 flex items-center gap-3">
-          <img
-            src={URL.createObjectURL(formData.imageFile)}
-            alt="Preview"
-            className="w-20 h-20 object-cover rounded-lg border"
-          />
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={() =>
-              setFormData((prev) => ({ ...prev, imageFile: null }))
-            }
-          >
-            Remove
-          </Button>
-        </div>
-      )}
-    </div>
-  </CardContent>
-</Card>
+          {/* Image Upload */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Project Image</CardTitle>
+              <CardDescription>
+                Upload a project thumbnail or logo (PNG, JPG, or WEBP)
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      setFormData((prev) => ({ ...prev, imageFile: file }));
+                    }
+                  }}
+                />
+                {formData.imageFile && (
+                  <div className="mt-2 flex items-center gap-3">
+                    <img
+                      src={URL.createObjectURL(formData.imageFile)}
+                      alt="Preview"
+                      className="w-20 h-20 object-cover rounded-lg border"
+                    />
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() =>
+                        setFormData((prev) => ({ ...prev, imageFile: null }))
+                      }
+                    >
+                      Remove
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
           {/* Links */}
           <Card>
             <CardHeader>
@@ -534,10 +550,7 @@ async function uploadImage(file) {
           >
             Cancel
           </Button>
-          <Button
-            onClick={handleMint}
-            className="gap-2 text-white"
-          >
+          <Button onClick={handleMint} className="gap-2 text-white">
             {isLoading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />

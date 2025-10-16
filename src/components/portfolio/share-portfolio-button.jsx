@@ -45,7 +45,7 @@ export function SharePortfolioButton({ url, variant = "default" }) {
       <DropdownMenuTrigger asChild>
         <Button variant={variant} className="gap-2">
           <Share2 className="w-4 h-4" />
-          Share Portfolio
+          
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

@@ -36,10 +36,15 @@ export default function Header() {
   return (
     <header className="sticky top-4 z-50">
       {/* Main Header */}
-      <div
-        style={{ gridTemplateColumns: 'auto 1fr auto' }}
-        className="mx-auto max-w-6xl px-4 py-2 grid items-center bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-cyan-600/20 border border-white/20 backdrop-blur-2xl rounded-full shadow-2xl shadow-black/10"
-      >
+    <div
+  className="grid items-center justify-center mx-4 lg:mx-auto max-w-6xl  px-4 py-5 md:py-2 
+             bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-cyan-600/20 
+             border border-white/20 backdrop-blur-2xl rounded-full 
+             shadow-2xl shadow-black/10"
+  style={{ gridTemplateColumns: 'auto 1fr auto' }}
+>
+  
+
         {/* Left - Logo */}
         <Link href="/" aria-label="Home" className="flex items-center gap-3 hover:opacity-90 transition justify-start pl-2">
           <div className="flex flex-col items-center gap-1 h-10 overflow-visible">
