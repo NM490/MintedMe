@@ -14,13 +14,15 @@ export default function Providers({ children }) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <OnchainKitProvider
+        
           apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY}
           chain={baseSepolia}
           projectId={process.env.NEXT_PUBLIC_CDP_PROJECT_ID}
           config={{
             appearance: {
+              name: "MintedMe",
               logo: "/minted.svg",
-              mode: "dark", // Hardcoded to dark mode
+              mode: "dark",
               theme: "base",
             },
             wallet: {

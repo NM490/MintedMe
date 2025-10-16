@@ -16,7 +16,7 @@ export default function ConnectCard() {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <div className="rounded-lg flex items-center justify-center mx-auto mb-4">
-              <Image src="/favicon.ico" alt="Logo" width={50} height={50} />
+              <Image src="/minted.svg" alt="Logo" width={50} height={50} className="invert scale-200"/>
             </div>
             <CardTitle>Connect Your Wallet</CardTitle>
             <CardDescription>
