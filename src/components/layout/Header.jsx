@@ -31,7 +31,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-4 z-50">
-      <div className="flex justify-center">
+      <div className="flex justify-center w-full m-auto">
         <div
           className="relative flex items-center w-full max-w-6xl mx-5 px-4 py-5 md:py-2
                      bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-cyan-600/20
