@@ -31,9 +31,9 @@ export default function Header() {
 
   return (
     <header className="sticky top-4 z-50">
-      <div className="flex justify-center w-full m-auto">
+      <div className="flex justify-center px-32">
         <div
-          className="relative flex items-center w-full max-w-6xl mx-5 px-4 py-5 md:py-2
+          className="relative flex items-center w-full mx-5 px-4 py-5 md:py-2
                      bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-cyan-600/20
                      border border-white/20 backdrop-blur-2xl rounded-full
                      shadow-2xl shadow-black/10"
@@ -66,7 +66,7 @@ export default function Header() {
                   className={`text-md font-medium text-white transition px-3 py-2 rounded-lg ${
                     isActive
                       ? "bg-white/20 text-cyan-300"
-                      : "hover:text-primary hover:brightness-150"
+                      : "hover:text-purple-500 hover:brightness-150"
                   }`}
                 >
                   {btn.text}

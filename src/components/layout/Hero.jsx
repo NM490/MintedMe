@@ -138,7 +138,7 @@ export default function Hero() {
           {/* Hero Section */}
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-20 md:mb-28">
             {/* Text Content */}
-            <div className="flex-1 space-y-8 text-center lg:text-start">
+            <div className="flex-1 space-y-8 py-36 text-center lg:text-start">
               <div className="space-y-6">
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-balance leading-tight tracking-tight">
                   <span className="font-minted">MintedMe</span>
