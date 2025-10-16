@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Award, FileText, Github } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,6 +13,53 @@ import { VerificationDialog } from "../dialogs/verification-dialog";
 import { Badge } from "@/components/ui/badge";
 
 export default function ProjectCard({ nft, address, img, size, ...props }) {
+  const descRef = useRef(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const [thumbTop, setThumbTop] = useState(0);
+  const [thumbHeight, setThumbHeight] = useState(0);
+
+  useEffect(() => {
+    function checkOverflow() {
+      const el = descRef.current;
+      if (!el) return setHasOverflow(false);
+      setHasOverflow(el.scrollHeight > el.clientHeight + 1);
+    }
+
+    checkOverflow();
+    window.addEventListener("resize", checkOverflow);
+    return () => window.removeEventListener("resize", checkOverflow);
+  }, [nft?.description]);
+
+  // update thumb position/size
+  useEffect(() => {
+    function updateThumb() {
+      const el = descRef.current;
+      if (!el) return;
+      const ch = el.clientHeight;
+      const sh = el.scrollHeight;
+      const st = el.scrollTop;
+      if (sh <= ch) {
+        setThumbHeight(0);
+        setThumbTop(0);
+        return;
+      }
+      const ratio = ch / sh;
+      const heightPx = Math.max(Math.round(ratio * ch), 16); // minimal thumb
+      const maxTop = ch - heightPx;
+      const topPx = Math.round((st / (sh - ch)) * maxTop) || 0;
+      setThumbHeight(heightPx);
+      setThumbTop(topPx);
+    }
+
+    updateThumb();
+    const el = descRef.current;
+    if (el) el.addEventListener('scroll', updateThumb);
+    window.addEventListener('resize', updateThumb);
+    return () => {
+      if (el) el.removeEventListener('scroll', updateThumb);
+      window.removeEventListener('resize', updateThumb);
+    };
+  }, [hasOverflow, nft?.description]);
   // Skills
   const skillsArray = nft?.raw.metadata.attributes[2].value
     ? nft.raw.metadata.attributes[2].value.split(",").map((s) => s.trim())
@@ -21,7 +69,7 @@ export default function ProjectCard({ nft, address, img, size, ...props }) {
   const skills = nft ? skillsArray : [1, 2, 3];
 
   return (
-    <Card {...props} className="overflow-hidden">
+    <Card {...props} className="overflow-hidden h-full flex flex-col">
       <CardHeader className="space-y-3">
         {/* Project Image */}
         <div className="relative w-full h-48 rounded-xl overflow-hidden bg-primary/10">
@@ -60,13 +108,32 @@ export default function ProjectCard({ nft, address, img, size, ...props }) {
         </div>
 
         {/* Description */}
-        <CardDescription className="text-base leading-relaxed">
-          {nft ? nft.description : <SkeletonLoad width="full" height="4" />}
-        </CardDescription>
+        <div className="relative">
+          <CardDescription
+            ref={descRef}
+            className="text-base text-justify leading-relaxed overflow-auto pr-2"
+            style={{ maxHeight: "4.5rem" }}
+            tabIndex={0}
+            aria-label="Project description"
+          >
+            {nft ? nft.description : <SkeletonLoad width="full" height="4" />}
+          </CardDescription>
+
+          {hasOverflow && (
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-3 flex items-start justify-center">
+              <div className="relative w-1 h-full flex items-start justify-center">
+                <div
+                  className="absolute right-0 bg-purple-600 dark:bg-purple-500 rounded w-px"
+                  style={{ top: thumbTop, height: thumbHeight }}
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </CardHeader>
 
-      {/* Skills */}
-      <CardContent className="space-y-4">
+      {/* Skills and actions - push to bottom so cards align */}
+      <CardContent className="space-y-4 mt-auto">
         <div className="flex flex-wrap gap-2">
           {skills.map((skill, index) =>
             nft ? (
@@ -79,8 +146,8 @@ export default function ProjectCard({ nft, address, img, size, ...props }) {
           )}
         </div>
 
-        {/* Buttons */}
-        <div className="flex items-center gap-4 pt-2">
+  {/* Buttons */}
+  <div className="flex items-center gap-4 pt-2">
           <Button
             variant="outline"
             size="sm"
