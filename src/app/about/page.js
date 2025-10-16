@@ -17,29 +17,29 @@ const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
- const members = [
-    {
-      img: "https://avatars.githubusercontent.com/u/158138262?v=4", // replace with your actual image path or URL
-      name: "Mark Angelo Santiago",
-      role: "Developer",
-      desc: "Frontend, Designer",
-      github: "https://github.com/MarksIT23", // 🧠 change to real URL
-    },
-    {
-      img: "https://avatars.githubusercontent.com/u/140160866?v=4",
-      name: "Walter Avenido",
-      role: "Developer",
-      desc: "Backend, Scripter",
-      github: "https://github.com/nm490", // 🧠 change to real URL
-    },
-    {
-      img: "https://avatars.githubusercontent.com/u/158138394?v=4",
-      name: "Prince Adriel Arthur Tew",
-      role: "Developer",
-      desc: "Hybrid Front/Back, Tester",
-      github: "https://github.com/PrinceTew", // 🧠 change to real URL
-    },
-  ];
+const members = [
+  {
+    img: "https://avatars.githubusercontent.com/u/158138262?v=4", // replace with your actual image path or URL
+    name: "Mark Angelo Santiago",
+    role: "Developer",
+    desc: "Frontend, Designer",
+    github: "https://github.com/MarksIT23", // 🧠 change to real URL
+  },
+  {
+    img: "https://avatars.githubusercontent.com/u/140160866?v=4",
+    name: "Walter Avenido",
+    role: "Developer",
+    desc: "Backend, Scripter",
+    github: "https://github.com/nm490", // 🧠 change to real URL
+  },
+  {
+    img: "https://avatars.githubusercontent.com/u/158138394?v=4",
+    name: "Prince Adriel Arthur Tew",
+    role: "Developer",
+    desc: "Hybrid Front/Back, Tester",
+    github: "https://github.com/PrinceTew", // 🧠 change to real URL
+  },
+];
 const AboutPage = () => (
   <div className="w-full grow flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
     <main className="container mx-auto px-6 py-16 max-w-6xl">
@@ -93,57 +93,57 @@ const AboutPage = () => (
         </motion.div>
 
         {/* Team Section */}
-  <motion.div
-  className="bg-white/5 dark:bg-black/20 border border-white/10 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-8 shadow-2xl shadow-black/10"
-  variants={itemVariants}
->
-  <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">
-    Team Members
-  </h2>
+        <motion.div
+          className="bg-white/5 dark:bg-black/20 border border-white/10 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-8 shadow-2xl shadow-black/10"
+          variants={itemVariants}
+        >
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">
+            Team Members
+          </h2>
 
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-  {members.map((member, idx) => (
-    <motion.div
-      key={idx}
-      variants={itemVariants}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className="flex" // ensures equal height across all cards
-    >
-      <a
-        href={member.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex flex-col justify-between text-center p-6 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/5 focus:ring-2 focus:ring-primary focus:outline-none w-full min-h-[340px]" // consistent height
-      >
-        {/* Top Section — Image + Name */}
-        <div>
-          <div className="w-20 h-20 mx-auto mb-4 relative rounded-full overflow-hidden border border-white/10">
-            <Image
-              src={member.img}
-              alt={member.name}
-              fill
-              className="object-cover"
-            />
-          </div>
-          <h3 className="text-md font-semibold text-foreground">
-            {member.name}
-          </h3>
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {members.map((member, idx) => (
+              <motion.div
+                key={idx}
+                variants={itemVariants}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex" // ensures equal height across all cards
+              >
+                <a
+                  href={member.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col justify-between text-center p-6 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/5 focus:ring-2 focus:ring-primary focus:outline-none w-full min-h-[340px]" // consistent height
+                >
+                  {/* Top Section — Image + Name */}
+                  <div>
+                    <div className="w-20 h-20 mx-auto mb-4 relative rounded-full overflow-hidden border border-white/10">
+                      <Image
+                        src={member.img}
+                        alt={member.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <h3 className="text-md font-semibold text-foreground">
+                      {member.name}
+                    </h3>
+                  </div>
 
-        {/* Bottom Section — Role + Desc + Icon */}
-        <div className="mt-6 flex flex-col items-center gap-2 text-center">
-          <p className="text-muted-foreground">{member.role}</p>
-          <p className="text-muted-foreground/50 text-xs">{member.desc}</p>
-          <div className="mt-2 flex justify-center text-muted-foreground hover:text-primary transition-colors">
-            <FaGithub className="text-lg" />
+                  {/* Bottom Section — Role + Desc + Icon */}
+                  <div className="mt-6 flex flex-col items-center gap-2 text-center">
+                    <p className="text-muted-foreground">{member.role}</p>
+                    <p className="text-muted-foreground/50 text-xs">{member.desc}</p>
+                    <div className="mt-2 flex justify-center text-muted-foreground hover:text-primary transition-colors">
+                      <FaGithub className="text-lg" />
+                    </div>
+                  </div>
+                </a>
+              </motion.div>
+            ))}
           </div>
-        </div>
-      </a>
-    </motion.div>
-  ))}
-</div>
-</motion.div>
+        </motion.div>
 
         {/* Features Grid */}
         <motion.div
