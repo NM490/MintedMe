@@ -1,11 +1,14 @@
 import Image from "next/image";
 import { CardInfo, card1, card2, card3, card4 } from "./CardInfo";
+import Spline from "@splinetool/react-spline";
+
 
 export default function Hero() {
   return (
     <>
+    
     <div className="w-full min-h-screen">
-      <main className="container mx-auto px-6 py-16 md:py-24">
+           <main className="container mx-auto px-6 py-16 md:py-24">
         <div className="max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-20 md:mb-28">
