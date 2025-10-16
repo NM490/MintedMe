@@ -6,14 +6,19 @@ import {
   CardHeader,
   CardTitle,
 } from "./card";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function ConnectCard() {
 
   return (
     <>
-      <div className="w-full flex flex-col items-center">
-        <Card className="w-full max-w-md">
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }} className="w-full flex flex-col h-full items-center"
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        <Card className="w-full m-auto max-w-md">
           <CardHeader className="text-center">
             <div className="rounded-lg flex items-center justify-center mx-auto mb-4">
               <Image src="/minted.svg" alt="Logo" width={50} height={50} className="invert scale-200"/>
@@ -25,7 +30,7 @@ export default function ConnectCard() {
             </CardDescription>
           </CardHeader>
         </Card>
-      </div>
+      </motion.div>
     </>
   );
 }
