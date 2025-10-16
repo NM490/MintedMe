@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { CopyButton } from "../ui/CopyButton";
 
-export function VerificationDialog({ project, walletAddress }) {
+export function VerificationDialog({ project, walletAddress, size }) {
   const etherscanUrl = `https://sepolia.basescan.org/tx/${project?.transactionHash}`;
   const ipfsUrl = project?.raw.tokenUri.replace(
     "ipfs://",
@@ -52,7 +52,8 @@ export function VerificationDialog({ project, walletAddress }) {
           className="gap-2 bg-transparent"
         >
           <Shield className="w-4 h-4" />
-          Verify on Blockchain
+          {size == ("rows")?"Verify on Blockchain":""}
+          
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
