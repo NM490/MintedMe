@@ -30,8 +30,8 @@ const LoadingPopup = ({
   const colors = colorClasses[spinnerColor] || colorClasses.purple;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-transparent p-8 rounded-2xl shadow-2xl max-w-md w-full mx-4">
+    <div className=" flex items-center justify-center z-50">
+      <div className=" p-8 rounded-2xl shadow-2xl max-w-md w-full mx-4">
         <div className="text-center">
           {/* Loading Spinner */}
           <div className={`w-16 h-16 border-4 rounded-full animate-spin mx-auto mb-4 ${colors.spinner}`}></div>

@@ -7,12 +7,13 @@ import { motion } from "framer-motion";
 import ProjectCard from "@/components/ui/ProjectCard";
 import { Grid3x2, Grid2X2, StretchHorizontal } from 'lucide-react';
 import BrowseCard from "@/components/ui/BrowseCard";
+import LoadingPopup from "@/components/ui/LoadingPopup";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x541385DB543875ee6B0270eA3294a8c55c9E48A6";
 
 export default function BrowseForm() {
   const [address, setAddress] = useState("");
-  const [activeTab, setActiveTab] = useState("browse"); // 'browse' | 'public'
+  const [activeTab, setActiveTab] = useState("public"); // 'browse' | 'public'
 
   // --- Browse wallet encode ---
   const encodeAddress = (ethAddress) => {
@@ -92,14 +93,14 @@ export default function BrowseForm() {
   return (
     <div className="relative flex flex-col items-center justify-center grow mt-24 sm:mt-32">
       {/* --- Tabs floating below navbar --- */}
-      <div className="absolute -top-8 sm:-top-10 flex flex-wrap justify-center gap-2 bg-background/40 backdrop-blur-md rounded-full p-1 shadow-lg z-10">
-        {["browse", "public"].map((tab) => (
+      <div className="-top-8 sm:-top-10 flex flex-wrap justify-center gap-2 bg-background/40 backdrop-blur-md rounded-full p-1 shadow-lg z-10">
+        {["public","browse"].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`px-5 py-2 rounded-full font-medium text-sm transition ${activeTab === tab
-                ? "bg-gradient-to-r from-primary to-secondary text-white shadow"
-                : "text-muted-foreground hover:text-foreground"
+              ? "bg-gradient-to-r from-[#0142d9]/65 to-purple-600/65  text-white shadow"
+              : "text-muted-foreground hover:text-foreground"
               }`}
           >
             {tab === "browse" ? "Browse Wallet" : "Public Portfolios"}
@@ -177,7 +178,7 @@ export default function BrowseForm() {
             </h2>
 
             {loading ? (
-              <p className="text-muted-foreground">Loading NFTs...</p>
+                <LoadingPopup isLoading={true}/>
             ) : error ? (
               <p className="text-red-500">{error}</p>
             ) : (
