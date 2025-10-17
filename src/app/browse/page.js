@@ -5,7 +5,7 @@ import { useState, useEffect, useMemo } from "react";
 import bs58 from "bs58";
 import { motion } from "framer-motion";
 import ProjectCard from "@/components/ui/ProjectCard";
-import { Grid3X3, Grid2X2, StretchHorizontal } from 'lucide-react';
+import { Grid3x2, Grid2X2, StretchHorizontal } from 'lucide-react';
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0xEf6bd98C0306BA33C5Caf85B46E55700A02Ad977";
 
@@ -212,13 +212,12 @@ export default function BrowseForm() {
                     >
                       <Grid3x2 className="w-5 h-5" />
 
-                      3 Grid
                     </button>
                     <button
                       onClick={() => setGridSize('grid2')}
                       className={`px-3 py-1 rounded ${gridSize === 'grid2' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
                     >
-                      <Grid2X3 className="w-5 h-5" />
+                      <Grid2X2 className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => setGridSize('rows')}
