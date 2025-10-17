@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo } from "react";
 import bs58 from "bs58";
 import { motion } from "framer-motion";
 import ProjectCard from "@/components/ui/ProjectCard";
+import { Grid3X3, Grid2X2, StretchHorizontal } from 'lucide-react';
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0xEf6bd98C0306BA33C5Caf85B46E55700A02Ad977";
 
@@ -95,11 +96,10 @@ export default function BrowseForm() {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-5 py-2 rounded-full font-medium text-sm transition ${
-              activeTab === tab
+            className={`px-5 py-2 rounded-full font-medium text-sm transition ${activeTab === tab
                 ? "bg-gradient-to-r from-primary to-secondary text-white shadow"
                 : "text-muted-foreground hover:text-foreground"
-            }`}
+              }`}
           >
             {tab === "browse" ? "Browse Wallet" : "Public Portfolios"}
           </button>
@@ -210,19 +210,21 @@ export default function BrowseForm() {
                       onClick={() => setGridSize('grid3')}
                       className={`px-3 py-1 rounded ${gridSize === 'grid3' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
                     >
+                      <Grid3x2 className="w-5 h-5" />
+
                       3 Grid
                     </button>
                     <button
                       onClick={() => setGridSize('grid2')}
                       className={`px-3 py-1 rounded ${gridSize === 'grid2' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
                     >
-                      2 Grid
+                      <Grid2X3 className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => setGridSize('rows')}
                       className={`px-3 py-1 rounded ${gridSize === 'rows' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
                     >
-                      Rows
+                      <StretchHorizontal className="w-5 h-5" />
                     </button>
                   </div>
                   <div className="text-sm text-muted-foreground">Showing {filteredNFTs.length} items</div>

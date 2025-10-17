@@ -13,6 +13,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useAccount } from "wagmi";
+import { Grid3x2, Grid2X2, StretchHorizontal } from 'lucide-react';
 
 export default function Portfolio() {
   const params = useParams();
@@ -39,7 +40,7 @@ export default function Portfolio() {
   });
 
   useEffect(() => {
-    
+
     fetchNFTs();
   }, [params]);
 
@@ -53,7 +54,7 @@ export default function Portfolio() {
       <div className="w-full grow flex flex-co justify-center ">
         <main className="container mx-auto px-6 py-12">
           <div className="space-y-8">
-            
+
 
             {/* Explore section - centered above the grid */}
             <div className="mb-6 flex flex-col items-center text-center">
@@ -64,7 +65,7 @@ export default function Portfolio() {
                 </p>
               </div>
 
-              
+
             </div>
 
             {/* Viewing row: show current wallet and search (under Explore) */}
@@ -82,7 +83,8 @@ export default function Portfolio() {
                   title="3 columns"
                   className={`px-4 py-2 rounded-full font-medium transition ${gridSize === 'grid3' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
                 >
-                  3 Grid
+                  <Grid3x2 className="w-5 h-5" />
+                  
                 </motion.button>
                 <motion.button
                   layout
@@ -91,7 +93,7 @@ export default function Portfolio() {
                   title="2 columns"
                   className={`px-4 py-2 rounded-full font-medium transition ${gridSize === 'grid2' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
                 >
-                  2 Grid
+                  <Grid2X2 className="w-5 h-5" />
                 </motion.button>
                 <motion.button
                   layout
@@ -100,7 +102,7 @@ export default function Portfolio() {
                   title="1 column"
                   className={`px-4 py-2 rounded-full font-medium transition ${gridSize === 'grid1' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
                 >
-                  Rows
+                  <StretchHorizontal className="w-5 h-5" />
                 </motion.button>
               </div>
 

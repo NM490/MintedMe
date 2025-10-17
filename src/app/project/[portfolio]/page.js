@@ -12,38 +12,40 @@ import { RotateCw } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useAccount } from "wagmi";
+import { Grid3x2, Grid2X2, StretchHorizontal } from 'lucide-react';
+
 
 export default function Portfolio() {
   const { address, isConnected } = useAccount();
   const [projects, setProjects] = useState([]);
-const [loading, setLoading] = useState(true); // initial load
-const [refreshing, setRefreshing] = useState(false); // refresh button
+  const [loading, setLoading] = useState(true); // initial load
+  const [refreshing, setRefreshing] = useState(false); // refresh button
 
-const fetchNFTs = useCallback(async () => {
-  try {
-    if (!projects.length) {
-      setLoading(true); // initial load
-    } else {
-      setRefreshing(true); // refresh
+  const fetchNFTs = useCallback(async () => {
+    try {
+      if (!projects.length) {
+        setLoading(true); // initial load
+      } else {
+        setRefreshing(true); // refresh
+      }
+
+      const res = await fetch(`/api/alchemy/get-project-nft?owner=${address}`);
+      const data = await res.json();
+
+      // During refresh, temporarily keep old projects but set them undefined
+      if (projects.length) {
+        setProjects(projects.map(p => null)); // show skeletons
+        await new Promise(r => setTimeout(r, 300)); // optional small delay for UX
+      }
+
+      setProjects(data.ownedNfts || []);
+    } catch (err) {
+      console.error("Failed to fetch NFTs:", err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
     }
-
-    const res = await fetch(`/api/alchemy/get-project-nft?owner=${address}`);
-    const data = await res.json();
-
-    // During refresh, temporarily keep old projects but set them undefined
-    if (projects.length) {
-      setProjects(projects.map(p => null)); // show skeletons
-      await new Promise(r => setTimeout(r, 300)); // optional small delay for UX
-    }
-
-    setProjects(data.ownedNfts || []);
-  } catch (err) {
-    console.error("Failed to fetch NFTs:", err);
-  } finally {
-    setLoading(false);
-    setRefreshing(false);
-  }
-}, [address, projects]);
+  }, [address, projects]);
 
   useEffect(() => {
     if (!address || !isConnected) return;
@@ -109,7 +111,8 @@ const fetchNFTs = useCallback(async () => {
                 variant={layout === "grid3" ? "default" : "outline"}
                 onClick={() => setLayout("grid3")}
               >
-                3 Grid
+                <Grid3x2 className="w-5 h-5" />
+
               </Button>
             </motion.div>
             <motion.div layout>
@@ -117,7 +120,8 @@ const fetchNFTs = useCallback(async () => {
                 variant={layout === "grid2" ? "default" : "outline"}
                 onClick={() => setLayout("grid2")}
               >
-                2 Grid
+                <Grid2X2 className="w-5 h-5" />
+
               </Button>
             </motion.div>
             <motion.div layout>
@@ -125,7 +129,8 @@ const fetchNFTs = useCallback(async () => {
                 variant={layout === "rows" ? "default" : "outline"}
                 onClick={() => setLayout("rows")}
               >
-                Rows
+                <StretchHorizontal className="w-5 h-5" />
+
               </Button>
             </motion.div>
           </motion.div>
@@ -136,14 +141,14 @@ const fetchNFTs = useCallback(async () => {
           {loading && !projects.length ? (
             <ProjectCard /> // show placeholder only on initial load
           ) : (
-          <motion.div layout className={getGridClass()}>
-            {(loading && !projects.length) || refreshing
-              ? projects.map((_, idx) => (
+            <motion.div layout className={getGridClass()}>
+              {(loading && !projects.length) || refreshing
+                ? projects.map((_, idx) => (
                   <motion.div layout key={idx} transition={{ duration: 0.35 }} className="h-full">
                     <ProjectCard />
                   </motion.div>
                 )) // skeletons
-              : projects.map((nft) => (
+                : projects.map((nft) => (
                   <motion.div
                     layout
                     key={`${nft.contract.address}-${nft.tokenId}`}
@@ -158,7 +163,7 @@ const fetchNFTs = useCallback(async () => {
                     />
                   </motion.div>
                 ))}
-          </motion.div>
+            </motion.div>
           )}
 
           {projects.length === 0 && !loading && (
