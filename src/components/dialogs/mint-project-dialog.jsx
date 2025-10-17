@@ -27,7 +27,7 @@ import { parseEther } from "viem";
 import { toast } from "sonner";
 import { normalizeUrl } from "@/utils/input-actions";
 
-const CONTRACT_ADDRESS = "0x8B205AA3a0958403C4d991202917FDCa9080cFE5";
+const CONTRACT_ADDRESS = "0x541385DB543875ee6B0270eA3294a8c55c9E48A6";
 
 const ABI = [
   {

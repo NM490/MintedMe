@@ -172,7 +172,7 @@ export default function Hero() {
                     </span>
                   </h1>
                   <p className="text-sm md:text-xl text-balance max-w-2xl leading-relaxed mx-auto lg:mx-0">
-                    Transform your academic and personal projects into blockchain-verified credentials. Create an immutable portfolio that employers and educators can trust.
+                    Transform your academic, personal, and professional projects into blockchain-verified credentials. Create an immutable portfolio that employers and educators can trust.
                   </p>
                 </div>
 
