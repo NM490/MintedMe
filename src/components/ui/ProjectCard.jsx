@@ -69,10 +69,13 @@ export default function ProjectCard({ nft, address, img, size, ...props }) {
   const skills = nft ? skillsArray : [1, 2, 3];
 
   return (
-    <Card {...props} className="overflow-hidden h-full flex flex-col">
+    <Card
+      {...props}
+      className="overflow-hidden h-full flex flex-col transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl"
+    >
       <CardHeader className="space-y-3">
         {/* Project Image */}
-        <div className="relative w-full h-48 rounded-xl overflow-hidden bg-primary/10">
+        <div className="relative w-full h-56 rounded-xl overflow-hidden bg-primary/8">
           {img ? (
             <Image
               src={img}

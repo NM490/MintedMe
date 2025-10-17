@@ -45,10 +45,9 @@ export function SharePortfolioButton({ url, variant = "default" }) {
       <DropdownMenuTrigger asChild>
         <Button variant={variant} className="gap-2">
           <Share2 className="w-4 h-4" />
-          
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="text-foreground">
         <DropdownMenuItem onClick={copyToClipboard} className="p-0">
           <CopyButton value={url} className={`w-full h-full text-md font-normal justify-start p-2`} variant={`ghost`}>Copy Link</CopyButton>
         </DropdownMenuItem>

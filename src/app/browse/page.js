@@ -31,6 +31,7 @@ export default function BrowseForm() {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterField, setFilterField] = useState("all");
+  const [gridSize, setGridSize] = useState("grid3"); // 'grid3' | 'grid2' | 'rows'
 
   useEffect(() => {
     async function loadNFTs() {
@@ -110,7 +111,7 @@ export default function BrowseForm() {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="bg-white/5 backdrop-blur-md p-8 sm:p-10 rounded-2xl shadow-2xl w-11/12 sm:w-4/5 lg:w-3/5 flex flex-col items-center gap-6 m-auto relative mt-10"
+        className="bg-white/5 backdrop-blur-md p-8 sm:p-10 rounded-2xl shadow-2xl w-max sm:w-4/5 lg:w-3/5 flex flex-col items-center gap-6 m-auto relative mt-10"
       >
         {/* --- Browse Wallet Tab --- */}
         {activeTab === "browse" && (
@@ -170,7 +171,7 @@ export default function BrowseForm() {
             transition={{ duration: 0.4 }}
             className="flex flex-col items-center w-full gap-6"
           >
-            <h2 className="text-2xl font-bold text-foreground text-center">
+            <h2 className="text-2xl font-minted font-bold text-foreground text-center">
               Public Portfolios
             </h2>
 
@@ -192,7 +193,7 @@ export default function BrowseForm() {
                   <select
                     value={filterField}
                     onChange={(e) => setFilterField(e.target.value)}
-                    className="border rounded-xl px-3 py-2"
+                    className="border bg-card text-white rounded-xl px-3 py-2"
                   >
                     <option value="all">All Fields</option>
                     <option value="title">Title</option>
@@ -202,24 +203,50 @@ export default function BrowseForm() {
                   </select>
                 </div>
 
+                {/* Layout Controls */}
+                <div className="w-full flex items-center justify-between mt-3">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setGridSize('grid3')}
+                      className={`px-3 py-1 rounded ${gridSize === 'grid3' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
+                    >
+                      3 Grid
+                    </button>
+                    <button
+                      onClick={() => setGridSize('grid2')}
+                      className={`px-3 py-1 rounded ${gridSize === 'grid2' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
+                    >
+                      2 Grid
+                    </button>
+                    <button
+                      onClick={() => setGridSize('rows')}
+                      className={`px-3 py-1 rounded ${gridSize === 'rows' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
+                    >
+                      Rows
+                    </button>
+                  </div>
+                  <div className="text-sm text-muted-foreground">Showing {filteredNFTs.length} items</div>
+                </div>
+
                 {filteredNFTs.length === 0 ? (
                   <p className="text-muted-foreground text-center">
                     No NFTs found for this search.
                   </p>
                 ) : (
-                  <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full">
+                  <motion.div layout className={`grid gap-6 w-full ${gridSize === 'grid3' ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3' : gridSize === 'grid2' ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-2' : 'grid-cols-1'}`}>
                     {filteredNFTs.map((nft, i) => (
-                      <ProjectCard
-                        key={i}
-                        nft={nft}
-                        title={nft.name}
-                        description={nft.description}
-                        img={nft.image?.cachedUrl || "/placeholder.png"}
-                        address={nft.contract?.address}
-                        attributes={nft.raw?.metadata?.attributes}
-                      />
+                      <motion.div key={i} layout transition={{ type: 'spring', stiffness: 260, damping: 30 }} className="h-full">
+                        <ProjectCard
+                          nft={nft}
+                          title={nft.name}
+                          description={nft.description}
+                          img={nft.image?.cachedUrl || "/placeholder.png"}
+                          address={nft.contract?.address}
+                          attributes={nft.raw?.metadata?.attributes}
+                        />
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 )}
               </>
             )}
