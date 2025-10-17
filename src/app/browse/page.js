@@ -6,6 +6,7 @@ import bs58 from "bs58";
 import { motion } from "framer-motion";
 import ProjectCard from "@/components/ui/ProjectCard";
 import { Grid3x2, Grid2X2, StretchHorizontal } from 'lucide-react';
+import BrowseCard from "@/components/ui/BrowseCard";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x541385DB543875ee6B0270eA3294a8c55c9E48A6";
 
@@ -237,7 +238,7 @@ export default function BrowseForm() {
                   <motion.div layout className={`grid gap-6 w-full ${gridSize === 'grid3' ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3' : gridSize === 'grid2' ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-2' : 'grid-cols-1'}`}>
                     {filteredNFTs.map((nft, i) => (
                       <motion.div key={i} layout transition={{ type: 'spring', stiffness: 260, damping: 30 }} className="h-full">
-                        <ProjectCard
+                        <BrowseCard
                           nft={nft}
                           title={nft.name}
                           description={nft.description}
