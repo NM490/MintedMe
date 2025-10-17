@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import ProjectCard from "@/components/ui/ProjectCard";
 import { Grid3x2, Grid2X2, StretchHorizontal } from 'lucide-react';
 
-const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0xEf6bd98C0306BA33C5Caf85B46E55700A02Ad977";
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x541385DB543875ee6B0270eA3294a8c55c9E48A6";
 
 export default function BrowseForm() {
   const [address, setAddress] = useState("");
