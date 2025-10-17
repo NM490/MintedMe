@@ -195,7 +195,7 @@ export default function ProjectCard({ nft, address, img, size, ...props }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {size === "rows" ? "" : "View on Etherscan"}
+              {size === "rows" ? "View on Etherscan" : "View on Etherscan"}
             </a>
           </Button>
         </div>

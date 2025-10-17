@@ -10,6 +10,7 @@ import ShareCard from "@/components/ui/ShareCard";
 import { addressToSlug } from "@/lib/slug-actions";
 import { RotateCw } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
 import { useAccount } from "wagmi";
 
 export default function Portfolio() {
@@ -97,26 +98,37 @@ const fetchNFTs = useCallback(async () => {
           </div>
 
           {/* Layout Toggle */}
-          <div className="flex gap-2">
-            <Button
-              variant={layout === "grid3" ? "default" : "outline"}
-              onClick={() => setLayout("grid3")}
-            >
-              3 Grid
-            </Button>
-            <Button
-              variant={layout === "grid2" ? "default" : "outline"}
-              onClick={() => setLayout("grid2")}
-            >
-              2 Grid
-            </Button>
-            <Button
-              variant={layout === "rows" ? "default" : "outline"}
-              onClick={() => setLayout("rows")}
-            >
-              Rows
-            </Button>
-          </div>
+          <motion.div
+            className="flex gap-2"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div layout>
+              <Button
+                variant={layout === "grid3" ? "default" : "outline"}
+                onClick={() => setLayout("grid3")}
+              >
+                3 Grid
+              </Button>
+            </motion.div>
+            <motion.div layout>
+              <Button
+                variant={layout === "grid2" ? "default" : "outline"}
+                onClick={() => setLayout("grid2")}
+              >
+                2 Grid
+              </Button>
+            </motion.div>
+            <motion.div layout>
+              <Button
+                variant={layout === "rows" ? "default" : "outline"}
+                onClick={() => setLayout("rows")}
+              >
+                Rows
+              </Button>
+            </motion.div>
+          </motion.div>
 
           {/* Portfolio Preview Card */}
           <ShareCard url={url} />
@@ -124,19 +136,29 @@ const fetchNFTs = useCallback(async () => {
           {loading && !projects.length ? (
             <ProjectCard /> // show placeholder only on initial load
           ) : (
-          <div className={getGridClass()}>
-  {(loading && !projects.length) || refreshing
-    ? projects.map((_, idx) => <ProjectCard key={idx} />) // skeletons
-    : projects.map((nft) => (
-        <ProjectCard
-          nft={nft}
-          key={`${nft.contract.address}-${nft.tokenId}`}
-          address={address}
-          size={layout}
-          img={nft.image.cachedUrl}
-        />
-      ))}
-</div>
+          <motion.div layout className={getGridClass()}>
+            {(loading && !projects.length) || refreshing
+              ? projects.map((_, idx) => (
+                  <motion.div layout key={idx} transition={{ duration: 0.35 }} className="h-full">
+                    <ProjectCard />
+                  </motion.div>
+                )) // skeletons
+              : projects.map((nft) => (
+                  <motion.div
+                    layout
+                    key={`${nft.contract.address}-${nft.tokenId}`}
+                    transition={{ duration: 0.35 }}
+                    className="h-full"
+                  >
+                    <ProjectCard
+                      nft={nft}
+                      address={address}
+                      size={layout}
+                      img={nft.image.cachedUrl}
+                    />
+                  </motion.div>
+                ))}
+          </motion.div>
           )}
 
           {projects.length === 0 && !loading && (
