@@ -8,6 +8,8 @@ import ProjectCard from "@/components/ui/ProjectCard";
 import { Grid3x2, Grid2X2, StretchHorizontal } from 'lucide-react';
 import BrowseCard from "@/components/ui/BrowseCard";
 import LoadingPopup from "@/components/ui/LoadingPopup";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x541385DB543875ee6B0270eA3294a8c55c9E48A6";
 
@@ -185,25 +187,27 @@ export default function BrowseForm() {
               <>
                 {/* 🔍 Search + Filter Bar */}
                 <div className="flex flex-col sm:flex-row gap-4 w-full">
-                  <input
-                    type="text"
-                    placeholder="Search NFTs (e.g. React, Token #1, MintedMe)..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full sm:flex-1 border rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                  <select
-                    value={filterField}
-                    onChange={(e) => setFilterField(e.target.value)}
-                    className="border bg-card text-white rounded-xl px-3 py-2"
-                  >
-                    <option value="all">All Fields</option>
-                    <option value="title">Title</option>
-                    <option value="address">Contract Address</option>
-                    <option value="skills">Skills / Attributes</option>
-                    <option value="tokenid">Token ID</option>
-                  </select>
-                </div>
+  <Input
+    type="text"
+    placeholder="Search NFTs (e.g. React, Token #1, MintedMe)..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="w-full sm:flex-1"
+  />
+
+  <Select value={filterField} onValueChange={(value) => setFilterField(value)}>
+    <SelectTrigger className="w-full sm:w-auto">
+      <SelectValue placeholder="All Fields" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="all">All Fields</SelectItem>
+      <SelectItem value="title">Title</SelectItem>
+      <SelectItem value="address">Contract Address</SelectItem>
+      <SelectItem value="skills">Skills / Attributes</SelectItem>
+      <SelectItem value="tokenid">Token ID</SelectItem>
+    </SelectContent>
+  </Select>
+</div>
 
                 {/* Layout Controls */}
                 <div className="w-full flex items-center justify-between mt-3">

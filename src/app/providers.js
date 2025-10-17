@@ -21,7 +21,7 @@ export default function Providers({ children }) {
           config={{
             appearance: {
               name: "MintedMe",
-              logo: "/minted.svg",
+              logo: "/in.svg",
               mode: "dark",
               theme: "base",
             },
