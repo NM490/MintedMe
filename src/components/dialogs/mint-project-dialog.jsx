@@ -288,7 +288,7 @@ export function MintProjectDialog({ refreshNFTs }) {
       await mintProject(ipfsHash);
     } catch (err) {
       console.error("Minting error:", err);
-      
+
       // If an image was uploaded, attempt to remove it from IPFS
       if (imageIpfsHash) {
         try {
@@ -311,7 +311,7 @@ export function MintProjectDialog({ refreshNFTs }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-2 bg-brand text-white hover:bg-brand/10 transition dark:border-1 dark:bg-brand/20 dark:text-white dark:hover:bg-brand/30 dark:border-brand/80">
+        <Button className="gap-2 bg-gradient-to-r from-[#0142d9] to-purple-600 text-white font-semibold hover:bg-primary/10 transition">
           <Plus className="w-4 h-4" />
           Mint New Project
         </Button>
@@ -345,9 +345,8 @@ export function MintProjectDialog({ refreshNFTs }) {
                   onBlur={(e) => validateField("title", e.target.value)}
                 />
                 <p
-                  className={`text-red-500 text-xs absolute bottom-0 left-0 ${
-                    errors.title ? "" : "invisible"
-                  }`}
+                  className={`text-red-500 text-xs absolute bottom-0 left-0 ${errors.title ? "" : "invisible"
+                    }`}
                 >
                   {errors.title}
                 </p>
@@ -365,9 +364,8 @@ export function MintProjectDialog({ refreshNFTs }) {
                   onBlur={(e) => validateField("description", e.target.value)}
                 />
                 <p
-                  className={`text-red-500 text-xs absolute bottom-0 left-0 ${
-                    errors.description ? "" : "invisible"
-                  }`}
+                  className={`text-red-500 text-xs absolute bottom-0 left-0 ${errors.description ? "" : "invisible"
+                    }`}
                 >
                   {errors.description}
                 </p>
@@ -440,9 +438,8 @@ export function MintProjectDialog({ refreshNFTs }) {
                   />
                 </div>
                 <p
-                  className={`text-red-500 text-xs absolute bottom-0 left-0 ${
-                    errors.githubUrl ? "" : "invisible"
-                  }`}
+                  className={`text-red-500 text-xs absolute bottom-0 left-0 ${errors.githubUrl ? "" : "invisible"
+                    }`}
                 >
                   {errors.githubUrl}
                 </p>
@@ -466,9 +463,8 @@ export function MintProjectDialog({ refreshNFTs }) {
                   />
                 </div>
                 <p
-                  className={`text-red-500 text-xs absolute bottom-0 left-0 ${
-                    errors.portfolioUrl ? "" : "invisible"
-                  }`}
+                  className={`text-red-500 text-xs absolute bottom-0 left-0 ${errors.portfolioUrl ? "" : "invisible"
+                    }`}
                 >
                   {errors.portfolioUrl}
                 </p>
@@ -550,7 +546,7 @@ export function MintProjectDialog({ refreshNFTs }) {
           >
             Cancel
           </Button>
-          <Button onClick={handleMint} className="gap-2 text-white">
+          <Button onClick={handleMint} className="gap-2 bg-gradient-to-r from-[#0142d9] to-purple-600 text-white">
             {isLoading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />

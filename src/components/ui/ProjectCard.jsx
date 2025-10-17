@@ -99,15 +99,24 @@ export default function ProjectCard({ nft, address, img, size, ...props }) {
           >
             {nft ? nft.tokenId : "\u00A0"}
           </Badge>
-          <Badge
-            variant="default"
-            className={`gap-1 bg-primary text-primary-foreground ${
-              !nft && "animate-pulse bg-primary/30"
-            }`}
-          >
-            <Award className="w-3 h-3" />
-            {size === "rows" || size === "grid2" ? "Verified" : ""}
-          </Badge>
+
+          {/* Entire badge with hover tooltip */}
+          <div className="relative group inline-block">
+            <Badge
+              variant="default"
+              className={`gap-1 bg-primary text-primary-foreground ${!nft && "animate-pulse bg-primary/30"
+                }`}
+            >
+              <Award className="w-3 h-3" />
+              {size === "rows" || size === "grid2" ? "Verified" : ""}
+            </Badge>
+
+            {/* Tooltip that shows on badge hover */}
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+              Blockchain Verified NFT
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+            </div>
+          </div>
         </div>
 
         {/* Description */}
@@ -149,8 +158,8 @@ export default function ProjectCard({ nft, address, img, size, ...props }) {
           )}
         </div>
 
-  {/* Buttons */}
-  <div className="flex items-center gap-4 pt-2">
+        {/* Buttons */}
+        <div className="flex items-center gap-4 pt-2">
           <Button
             variant="outline"
             size="sm"
