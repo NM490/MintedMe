@@ -120,7 +120,7 @@ export default function BrowseForm() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="text-2xl font-bold text-foreground text-center"
+              className="text-2xl font-bold text-foreground font-minted text-center"
             >
               Explore Any Wallet Portfolio
             </motion.h2>
