@@ -3,6 +3,8 @@ import Image from "next/image";
 import { CardInfo, card1, card2, card3, card4 } from "./CardInfo";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter, usePathname } from "next/navigation";
+import LoadingPopup from "../ui/LoadingPopup";
 
 function ForegroundCarousel({ images = [], index = 0, setIndex }) {
   const imgs = images.slice(0, 5);
@@ -127,70 +129,109 @@ export default function Hero() {
     "/slide5.jpg",
   ];
   const [index, setIndex] = useState(0);
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("");
+
+  // Reset loading when route changes (page has loaded)
+  useEffect(() => {
+    setIsLoading(false);
+  }, [pathname]);
+
+  const handleNavigation = (path, message = "Loading...") => {
+    setLoadingMessage(message);
+    // setIsLoading(true);
+    router.push(path);
+  };
+
+  const handleGetStarted = () => {
+    handleNavigation("/project", "Preparing your portfolio...");
+  };
+
+  const handleViewExamples = () => {
+    handleNavigation("/browse", "Loading examples...");
+  };
 
   return (
     <>
       <BackgroundCarousel images={defaultImages} index={index} setIndex={setIndex} />
       <div className="w-full min-h-screen">
-        
+
         <main className="container mx-auto px-6 py-16 w-full">
           <div className="w-full">
-          {/* Hero Section */}
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-20 md:mb-28">
-            {/* Text Content */}
-            <div className="flex-1 space-y-8 py-36 text-center lg:text-start">
-              <div className="space-y-6">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-balance leading-tight tracking-tight">
-                  <span className="font-minted">MintedMe</span>
-                  <span className="inline-block -ml-1 text-transparent bg-clip-text bg-gradient-to-r from-[#0142d9] to-[#6b21a8]">
-                    Verifiable NFTs
-                  </span>
-                </h1>
-                <p className="text-sm md:text-xl text-balance max-w-2xl leading-relaxed mx-auto lg:mx-0">
-                  Transform your academic and personal projects into blockchain-verified credentials. Create an immutable portfolio that employers and educators can trust.
+            {/* Hero Section */}
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-20 md:mb-28">
+              {/* Text Content */}
+              <div className="flex-1 space-y-8 py-36 text-center lg:text-start">
+                <div className="space-y-6">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-balance leading-tight tracking-tight">
+                    <span className="font-minted">MintedMe</span>
+                    <span className="inline-block -ml-1 text-transparent bg-clip-text bg-gradient-to-r from-[#0142d9] to-[#6b21a8]">
+                      Verifiable NFTs
+                    </span>
+                  </h1>
+                  <p className="text-sm md:text-xl text-balance max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                    Transform your academic and personal projects into blockchain-verified credentials. Create an immutable portfolio that employers and educators can trust.
+                  </p>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+
+                  <button
+                    onClick={handleGetStarted}
+                    disabled={isLoading}
+                    className="px-8 py-4 bg-gradient-to-r from-[#0142d9] to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  >
+                    {isLoading ? "Loading..." : "Get Started Free"}
+                  </button>
+
+                  <button
+                    onClick={handleViewExamples}
+                    disabled={isLoading}
+                    className="px-8 py-4 border border-gray-300 font-semibold rounded-xl hover:text-purple-600 hover:bg-white hover:border-white transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  >
+                    View Examples
+                  </button>
+                </div>
+
+                <LoadingPopup
+                  isLoading={isLoading}
+                  message={loadingMessage}
+                  title="Please Wait"
+                />
+              </div>
+
+              {/* Visual Element */}
+              <div className="flex-1 flex justify-center lg:justify-end">
+                <ForegroundCarousel images={defaultImages} index={index} setIndex={setIndex} />
+              </div>
+            </div>
+            <div className="w-full rounded-2xl p-8">
+              {/* Features Section */}
+              <div className="space-y-4 mb-16 text-center">
+                <h2 className="text-3xl md:text-4xl font-minted font-bold bg-clip-text">
+                  Why Choose Our Platform?
+                </h2>
+                <p className="text-lg max-w-2xl mx-auto">
+                  Everything you need to showcase your work with <span className="text-purple-600 ">credibility</span> and <span className="text-purple-600">style</span>
                 </p>
               </div>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-                <button className="px-8 py-4 bg-gradient-to-r from-[#0142d9] to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                  Get Started Free
-                </button>
-                <button className="px-8 py-4 border border-gray-300 font-semibold rounded-xl hover:text-purple-600 hover:bg-white hover:border-white transition-all duration-300 transform hover:scale-105">
-                  View Examples
-                </button>
+              {/* Modern Cards Grid */}
+              <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-center justify-center">
+                <CardInfo {...card1} />
+                <CardInfo {...card2} />
+                <CardInfo {...card3} />
+              </div>
+              <div className="grid md:grid-cols-1 pt-8 gap-8 max-w-5xl mx-auto">
+                <CardInfo {...card4} />
               </div>
             </div>
-
-            {/* Visual Element */}
-            <div className="flex-1 flex justify-center lg:justify-end">
-              <ForegroundCarousel images={defaultImages} index={index} setIndex={setIndex} />
-            </div>
           </div>
-          <div className="w-full rounded-2xl p-8">
-          {/* Features Section */}
-          <div className="space-y-4 mb-16 text-center">
-            <h2 className="text-3xl md:text-4xl font-minted font-bold bg-clip-text">
-              Why Choose Our Platform?
-            </h2>
-            <p className="text-lg max-w-2xl mx-auto">
-              Everything you need to showcase your work with <span className="text-purple-600 ">credibility</span> and <span className="text-purple-600">style</span>
-            </p>
-          </div>
-
-          {/* Modern Cards Grid */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-center justify-center">
-            <CardInfo {...card1} />
-            <CardInfo {...card2} />
-            <CardInfo {...card3} />
-          </div>
-          <div className="grid md:grid-cols-1 pt-8 gap-8 max-w-5xl mx-auto">
-            <CardInfo {...card4} />
-          </div>
-        </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
     </>
   );
 }

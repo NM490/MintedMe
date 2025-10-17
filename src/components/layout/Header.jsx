@@ -42,7 +42,7 @@ export default function Header() {
           <Link
             href="/"
             aria-label="Home"
-            className="flex items-center gap-3 hover:opacity-90 transition z-10"
+            className="flex items-center gap-3 hover:opacity-90 transition z-10 translate-x-3"
           >
             <div className="relative h-10 w-10">
               <Image
