@@ -68,38 +68,48 @@ export default function Portfolio() {
             </div>
 
             {/* Viewing row: show current wallet and search (under Explore) */}
-            <div className="mb-4 flex items-center justify-between">
-              <div className="w-1/3 flex items-center gap-3">
-                <button
-                  className={`px-3 py-1 rounded ${gridSize === 'grid3' ? 'bg-primary text-white' : 'bg-transparent border border-border'}`}
+            <motion.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+              className="mb-6 flex items-center justify-between bg-white/5 backdrop-blur-sm rounded-2xl p-4 shadow-sm"
+            >
+              <div className="flex items-center gap-3">
+                <motion.button
+                  layout
                   onClick={() => setGridSize('grid3')}
                   aria-pressed={gridSize === 'grid3'}
                   title="3 columns"
+                  className={`px-4 py-2 rounded-full font-medium transition ${gridSize === 'grid3' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
                 >
                   3 Grid
-                </button>
-                <button
-                  className={`px-3 py-1 rounded ${gridSize === 'grid2' ? 'bg-primary text-white' : 'bg-transparent border border-border'}`}
+                </motion.button>
+                <motion.button
+                  layout
                   onClick={() => setGridSize('grid2')}
                   aria-pressed={gridSize === 'grid2'}
                   title="2 columns"
+                  className={`px-4 py-2 rounded-full font-medium transition ${gridSize === 'grid2' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
                 >
                   2 Grid
-                </button>
-                <button
-                  className={`px-3 py-1 rounded ${gridSize === 'grid1' ? 'bg-primary text-white' : 'bg-transparent border border-border'}`}
+                </motion.button>
+                <motion.button
+                  layout
                   onClick={() => setGridSize('grid1')}
                   aria-pressed={gridSize === 'grid1'}
                   title="1 column"
+                  className={`px-4 py-2 rounded-full font-medium transition ${gridSize === 'grid1' ? 'bg-primary text-white' : 'bg-transparent border border-border text-foreground'}`}
                 >
                   Rows
-                </button>
+                </motion.button>
               </div>
-              <div className="w-1/3 text-center">
+
+              <div className="text-center">
                 <div className="text-base font-minted">Now Viewing</div>
-                <div className="font-mono text-sm">{slugToAddress(params.portfolio)}</div>
+                <div className="font-mono text-sm text-muted-foreground">{slugToAddress(params.portfolio)}</div>
               </div>
-              <div className="w-1/3 flex justify-end">
+
+              <div className="flex items-center gap-3">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -114,20 +124,30 @@ export default function Portfolio() {
                   <input
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
-                    placeholder="Search Other Wallets"
-                    className="px-3 py-2 border border-border rounded-md text-sm"
+                    placeholder="Search other wallets (0x...)"
+                    className="px-4 py-2 rounded-full bg-background/60 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
-                  <button className="px-3 py-2 bg-primary text-white rounded-md text-sm">Go</button>
+                  <button className="px-4 py-2 bg-primary text-white rounded-full text-sm font-medium">Go</button>
                 </form>
+                <SharePortfolioButton url={`http://localhost:3000/browse/${params.portfolio}`} variant="ghost" />
               </div>
-            </div>
+            </motion.div>
 
             {loading ? (
               <ProjectCard />
             ) : (
-              <motion.div layout className={`grid gap-6 ${gridSize === 'grid3' ? 'md:grid-cols-3' : gridSize === 'grid2' ? 'md:grid-cols-2' : 'md:grid-cols-1'}`}>
+              <motion.div
+                layout
+                variants={{
+                  hidden: { opacity: 0, y: 6 },
+                  show: { opacity: 1, y: 0, transition: { staggerChildren: 0.06 } },
+                }}
+                initial="hidden"
+                animate="show"
+                className={`grid gap-6 ${gridSize === 'grid3' ? 'md:grid-cols-3' : gridSize === 'grid2' ? 'md:grid-cols-2' : 'md:grid-cols-1'}`}
+              >
                 {projects.map((nft) => (
-                  <motion.div key={`${nft.contract.address}-${nft.tokenId}`} layout transition={{ type: 'spring', stiffness: 300, damping: 30 }}>
+                  <motion.div key={`${nft.contract.address}-${nft.tokenId}`} layout transition={{ type: 'spring', stiffness: 260, damping: 30 }} className="h-full">
                     <ProjectCard
                       nft={nft}
                       address={slugToAddress(params.portfolio)}

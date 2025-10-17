@@ -26,6 +26,7 @@ module.exports = {
           DEFAULT: "#0142d9",
           text: "#0142d9",
           bg: "#0142d9",
+          card: "#160d20",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
