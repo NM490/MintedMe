@@ -180,7 +180,7 @@ export default function ProjectCard({ nft, address, img, size, ...props }) {
             </Button>
           )}
 
-          <VerificationDialog project={nft} walletAddress={address} />
+          {/* <VerificationDialog project={nft} walletAddress={address} /> */}
 
           <Button
             variant="outline"
